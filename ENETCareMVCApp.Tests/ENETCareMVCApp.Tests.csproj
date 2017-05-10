@@ -99,7 +99,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\For_check\ENETCareMVC.csproj">
+    <ProjectReference Include="..\ENETCareMVC\ENETCareMVC.csproj">
       <Project>{305CF20F-7034-4F53-96BC-F75A5E28712A}</Project>
       <Name>ENETCareMVC</Name>
     </ProjectReference>

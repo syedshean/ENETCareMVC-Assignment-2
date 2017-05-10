@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCareMVC", "For_check\ENETCareMVC.csproj", "{305CF20F-7034-4F53-96BC-F75A5E28712A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCareMVC", "ENETCareMVC\ENETCareMVC.csproj", "{305CF20F-7034-4F53-96BC-F75A5E28712A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCareMVCApp.Tests", "For_check.Tests\ENETCareMVCApp.Tests.csproj", "{C7EA3C67-66CC-4A42-BBF7-3D7BB2E81753}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCareMVCApp.Tests", "ENETCareMVCApp.Tests\ENETCareMVCApp.Tests.csproj", "{C7EA3C67-66CC-4A42-BBF7-3D7BB2E81753}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
