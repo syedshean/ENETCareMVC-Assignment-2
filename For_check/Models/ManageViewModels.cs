@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace For_check.Models
+namespace ENETCareMVCApp.Models
 {
     public class IndexViewModel
     {

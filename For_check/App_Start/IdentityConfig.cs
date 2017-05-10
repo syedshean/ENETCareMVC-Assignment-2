@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using For_check.Models;
+using ENETCareMVCApp.Models;
 
-namespace For_check
+namespace ENETCareMVCApp
 {
     public class EmailService : IIdentityMessageService
     {

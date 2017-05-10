@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace For_check
+namespace ENETCareMVCApp
 {
     public class FilterConfig
     {

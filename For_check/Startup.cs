@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(For_check.Startup))]
-namespace For_check
+[assembly: OwinStartupAttribute(typeof(ENETCareMVCApp.Startup))]
+namespace ENETCareMVCApp
 {
     public partial class Startup
     {

@@ -5,9 +5,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using For_check.Models;
+using ENETCareMVCApp.Models;
 
-namespace For_check
+namespace ENETCareMVCApp
 {
     public partial class Startup
     {

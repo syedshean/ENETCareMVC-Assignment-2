@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace For_check.Models
+namespace ENETCareMVCApp.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

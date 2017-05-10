@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using For_check.Models;
+using ENETCareMVCApp.Models;
 
-namespace For_check.Controllers
+namespace ENETCareMVCApp.Controllers
 {
     [Authorize]
     public class ManageController : Controller
