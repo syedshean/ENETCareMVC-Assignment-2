@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace ENETCareMVCApp.Tests
 {
-    
-
     public class When_Manager_Logs_In
     {
         string[] proposedInterventionNames = {"Supply Mosquito Net", "Hepataisis Training", "Supply and Install Storm-proof Home Kit", "Install Portable Toilet"};
