@@ -65,6 +65,11 @@ namespace ENETCareMVCApp.Models
     public class RegisterViewModel
     {
         [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "In User Name, use letters only please!")]
+        [StringLength(100, ErrorMessage = "The {0} must not exceed 100 characters.")]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

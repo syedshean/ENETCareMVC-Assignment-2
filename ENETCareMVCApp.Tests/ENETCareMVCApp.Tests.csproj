@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C7EA3C67-66CC-4A42-BBF7-3D7BB2E81753}</ProjectGuid>
+    <ProjectGuid>{94703F6B-E797-4BD7-A915-CC3559F58D32}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>For_check.Tests</RootNamespace>
-    <AssemblyName>For_check.Tests</AssemblyName>
+    <RootNamespace>ENETCareMVCApp.Tests</RootNamespace>
+    <AssemblyName>ENETCareMVCApp.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -82,15 +82,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountantTest.cs" />
-    <Compile Include="InterventionStatusNames.cs" />
-    <Compile Include="ManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="SiteEngineerTests.cs" />
-    <Compile Include="When_Accountant_Logs_In.cs" />
-    <Compile Include="When_Manager_Logs_In.cs" />
-    <Compile Include="When_SiteEngineer_Creates_Intervention.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -99,9 +92,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ENETCareMVC\ENETCareMVC.csproj">
-      <Project>{305CF20F-7034-4F53-96BC-F75A5E28712A}</Project>
-      <Name>ENETCareMVC</Name>
+    <ProjectReference Include="..\ENETCareMVCApp\ENETCareMVCApp.csproj">
+      <Project>{96004179-505F-4185-B701-894EB40FD259}</Project>
+      <Name>ENETCareMVCApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
