@@ -196,14 +196,35 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\DistrictController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DAL\DBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705150632418_Database Create.cs" />
+    <Compile Include="Migrations\201705150632418_Database Create.Designer.cs">
+      <DependentUpon>201705150632418_Database Create.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705151053083_Database update.cs" />
+    <Compile Include="Migrations\201705151053083_Database update.Designer.cs">
+      <DependentUpon>201705151053083_Database update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705151057105_Database update3.cs" />
+    <Compile Include="Migrations\201705151057105_Database update3.Designer.cs">
+      <DependentUpon>201705151057105_Database update3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\District.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Intervention.cs" />
+    <Compile Include="Models\InterventionType.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -265,6 +286,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\District\Create.cshtml" />
+    <Content Include="Views\District\Delete.cshtml" />
+    <Content Include="Views\District\Details.cshtml" />
+    <Content Include="Views\District\Edit.cshtml" />
+    <Content Include="Views\District\Index.cshtml" />
+    <Content Include="Views\Client\Create.cshtml" />
+    <Content Include="Views\Client\Delete.cshtml" />
+    <Content Include="Views\Client\Details.cshtml" />
+    <Content Include="Views\Client\Edit.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -276,6 +307,17 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201705150632418_Database Create.resx">
+      <DependentUpon>201705150632418_Database Create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705151053083_Database update.resx">
+      <DependentUpon>201705151053083_Database update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705151057105_Database update3.resx">
+      <DependentUpon>201705151057105_Database update3.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
