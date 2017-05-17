@@ -133,5 +133,74 @@ namespace ENETCareMVCApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [NonAction]
+        public List<Client> GetClientListByDistrict(int districtID)
+        {
+            List<Client> aClientList = new List<Client>();
+            using (var db = new DBContext())
+            {
+                aClientList = (from c in db.Clients
+                               where c.District.DistrictID == districtID
+                               select c).ToList();
+
+            }
+            return aClientList;
+        }
+
+        [NonAction]
+        public List<Client> GetClientList()
+        {
+            List<Client> aClientList = new List<Client>();
+            using (var db = new DBContext())
+            {
+                aClientList = (from c in db.Clients
+                              select c).ToList();
+
+            }            
+            return aClientList;
+        }
+
+        [NonAction]
+        public string GetClientNameByClientID(int clientID)
+        {
+            
+            string clientName;
+            using (var db = new DBContext())
+            {
+                 clientName = (from c in db.Clients
+                           where c.ClientID == clientID
+                           select c.ClientName).ToString();
+                
+            }
+            return clientName;
+        }
+
+        //[NonAction]
+        //public bool IsUserNameExist(string clientName)
+        //{
+        //    bool isExist = false;
+        //    connectionString = aDatabaseConfig.Setup("ENETCareDatabase");
+        //    using (SqlConnection connection = new SqlConnection())
+        //    {
+        //        connection.ConnectionString = connectionString;
+        //        string query = "SELECT * FROM Client WHERE ClientName=@clientName";
+
+        //        SqlCommand command = new SqlCommand(query, connection);
+        //        command.Parameters.Add(new SqlParameter("clientName", clientName));
+
+        //        try
+        //        {
+        //            connection.Open();
+        //            SqlDataReader reader = command.ExecuteReader();
+        //            while (reader.Read())
+        //            {
+        //                isExist = true;
+        //            }
+        //        }
+        //        catch { }
+        //    }
+        //    return isExist;
+        //}
     }
 }
