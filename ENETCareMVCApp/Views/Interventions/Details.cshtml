@@ -1,0 +1,74 @@
+﻿@model ENETCareMVCApp.Models.Intervention
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Intervention</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LabourRequired)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LabourRequired)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CostRequired)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CostRequired)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InterventionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InterventionDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InterventionState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InterventionState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RemainingLife)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RemainingLife)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastEditDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastEditDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.InterventionID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

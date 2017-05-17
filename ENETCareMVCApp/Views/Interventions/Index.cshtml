@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ENETCareMVCApp.Models.Intervention>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LabourRequired)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CostRequired)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InterventionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InterventionState)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemainingLife)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastEditDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LabourRequired)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CostRequired)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InterventionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InterventionState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RemainingLife)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastEditDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.InterventionID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.InterventionID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.InterventionID })
+        </td>
+    </tr>
+}
+
+</table>
