@@ -11,17 +11,18 @@ using ENETCareMVCApp.Models;
 
 namespace ENETCareMVCApp.Controllers
 {
-    public class ClientController : Controller
+    public class ClientsController : Controller
     {
         private DBContext db = new DBContext();
 
-        // GET: Client
+        // GET: Clients
         public ActionResult Index()
         {
-            return View(db.Clients.ToList());
+            var clients = db.Clients.Include(c => c.District);
+            return View(clients.ToList());
         }
 
-        // GET: Client/Details/5
+        // GET: Clients/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,41 +37,20 @@ namespace ENETCareMVCApp.Controllers
             return View(client);
         }
 
-        // GET: Client/Create
+        // GET: Clients/Create
         public ActionResult Create()
         {
-            // note getting loginname null
-            //string loginName = ViewBag.UserName;
-            //using (DBContext dbContext = new DBContext())
-            //{
-            //    var district = from u in dbContext.Users
-            //                   where u.LoginName.Equals(loginName)
-            //                   select u.District;
-
-            //    District aDistrict = (District)district;
-            //    ViewData["districtName"] = aDistrict.DistrictName;
-            //}
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName");
             return View();
         }
 
-        // POST: Client/Create
+        // POST: Clients/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ClientID,ClientName,Address,DistrictID")] Client client)
         {
-            string loginName = ViewBag.UserName;
-            using (DBContext dbContext = new DBContext())
-            {
-                var district = from u in dbContext.Users
-                               where u.LoginName.Equals(loginName)
-                               select u.District;
-
-                District aDistrict = (District)district;
-                client.District = aDistrict;
-                client.District.DistrictID = aDistrict.DistrictID;
-            }
             if (ModelState.IsValid)
             {
                 db.Clients.Add(client);
@@ -78,10 +58,11 @@ namespace ENETCareMVCApp.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
             return View(client);
         }
 
-        // GET: Client/Edit/5
+        // GET: Clients/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -93,15 +74,16 @@ namespace ENETCareMVCApp.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
             return View(client);
         }
 
-        // POST: Client/Edit/5
+        // POST: Clients/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClientID,ClientName,Address")] Client client)
+        public ActionResult Edit([Bind(Include = "ClientID,ClientName,Address,DistrictID")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -109,10 +91,11 @@ namespace ENETCareMVCApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
             return View(client);
         }
 
-        // GET: Client/Delete/5
+        // GET: Clients/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -127,7 +110,7 @@ namespace ENETCareMVCApp.Controllers
             return View(client);
         }
 
-        // POST: Client/Delete/5
+        // POST: Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -146,6 +129,7 @@ namespace ENETCareMVCApp.Controllers
             }
             base.Dispose(disposing);
         }
+
 
         [NonAction]
         public List<Client> GetClientListByDistrict(int districtID)
@@ -168,23 +152,23 @@ namespace ENETCareMVCApp.Controllers
             using (var db = new DBContext())
             {
                 aClientList = (from c in db.Clients
-                              select c).ToList();
+                               select c).ToList();
 
-            }            
+            }
             return aClientList;
         }
 
         [NonAction]
         public string GetClientNameByClientID(int clientID)
         {
-            
+
             string clientName;
             using (var db = new DBContext())
             {
-                 clientName = (from c in db.Clients
-                           where c.ClientID == clientID
-                           select c.ClientName).ToString();
-                
+                clientName = (from c in db.Clients
+                              where c.ClientID == clientID
+                              select c.ClientName).ToString();
+
             }
             return clientName;
         }
@@ -216,4 +200,5 @@ namespace ENETCareMVCApp.Controllers
         //    return isExist;
         //}
     }
+}
 }

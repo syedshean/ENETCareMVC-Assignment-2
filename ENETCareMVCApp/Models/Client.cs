@@ -17,6 +17,9 @@ namespace ENETCareMVCApp.Models
         [Required]
         public string Address { set; get; }
 
+        [Display(Name ="District")]
+        public int DistrictID { get; set; }
+
         [Required]
         public virtual District District { set; get; }
 

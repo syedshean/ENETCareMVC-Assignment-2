@@ -238,11 +238,20 @@ namespace ENETCareMVCApp.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                //Redirect(Request.UrlReferrer.ToString());
+                //Session["StatusMessage"] = "Password has been changed.";
+                string controller = GetControllerName();
+                return RedirectToAction("Index", controller, new { Message = "Password has been changed." });
+                //, new { Message = ManageMessageId.ChangePasswordSuccess }
             }
             AddErrors(result);
             return View(model);
         }
+
+        //private void Redirect(object p)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //
         // GET: /Manage/SetPassword
@@ -309,7 +318,6 @@ namespace ENETCareMVCApp.Controllers
             return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
         }
 
-        //
         // GET: /Manage/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()
         {
@@ -331,6 +339,13 @@ namespace ENETCareMVCApp.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        private string GetControllerName()
+        {
+            var logedUser = User.Identity.GetUserId().ToString();
+            var role = UserManager.GetRoles(logedUser);
+            return role[0];
         }
 
 #region Helpers

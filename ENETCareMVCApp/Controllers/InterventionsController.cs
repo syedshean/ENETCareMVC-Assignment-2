@@ -147,7 +147,7 @@ namespace ENETCareMVCApp.Controllers
             using (var db = new DBContext())
             {
                 anInterventionList = (from i in db.Interventions
-                                      where i.User.UserID == userID && (i.InterventionState == "Approved" || i.InterventionState == "Completed")
+                                      where i.User.UserID == userID && (i.InterventionState == InterventionState.Approved || i.InterventionState == InterventionState.Completed)
                                       select i).ToList();
 
             }
@@ -162,7 +162,7 @@ namespace ENETCareMVCApp.Controllers
             using (var db = new DBContext())
             {
                 anInterventionList = (from i in db.Interventions
-                                      where i.InterventionState == "Approved" || i.InterventionState == "Completed"
+                                      where i.InterventionState == InterventionState.Approved || i.InterventionState == InterventionState.Completed
                                       select i).ToList();
 
             }
@@ -192,7 +192,7 @@ namespace ENETCareMVCApp.Controllers
             using (var db = new DBContext())
             {
                 anInterventionList = (from i in db.Interventions
-                                      where i.ApprovalUser.UserID == userID && i.InterventionState == "Approved" 
+                                      where i.ApprovalUser.UserID == userID && i.InterventionState == InterventionState.Approved 
                                       select i).ToList();
 
             }

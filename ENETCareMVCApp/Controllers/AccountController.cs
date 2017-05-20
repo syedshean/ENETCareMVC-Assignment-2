@@ -409,6 +409,7 @@ namespace ENETCareMVCApp.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             ViewBag.UserName = "";
+            Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 
@@ -468,8 +469,10 @@ namespace ENETCareMVCApp.Controllers
             }
             if (role.Equals("SiteEngineer"))
                 return RedirectToAction("Index", "SiteEngineer");
+            else if(role.Equals("Manager"))
+                return RedirectToAction("Index", "Manager");
             else
-                return RedirectToAction("Index", "District");
+                return RedirectToAction("Index", "Accountant");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

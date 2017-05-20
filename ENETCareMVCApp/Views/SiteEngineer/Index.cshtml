@@ -1,7 +1,22 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Site Engineer Home Page</h2>
+<br/>
 
+<p class="text-success">@ViewBag.StatusMessage</p>
+
+<br />
+
+<p>
+    @Html.ActionLink("Create New Client", "Create", "Clients", null, new { @class = "link-button" })
+</p>
+
+<p>
+    @Html.ActionLink("All Client List", "Index", "Clients", null, new { @class = "link-button" })
+</p>
+
+<p>
+    @Html.ActionLink("Change Password", "ChangePassword", "Manage", null, new { @class = "link-button" })
+</p>
