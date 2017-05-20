@@ -39,6 +39,17 @@ namespace ENETCareMVCApp.Controllers
         // GET: Client/Create
         public ActionResult Create()
         {
+            // note getting loginname null
+            //string loginName = ViewBag.UserName;
+            //using (DBContext dbContext = new DBContext())
+            //{
+            //    var district = from u in dbContext.Users
+            //                   where u.LoginName.Equals(loginName)
+            //                   select u.District;
+
+            //    District aDistrict = (District)district;
+            //    ViewData["districtName"] = aDistrict.DistrictName;
+            //}
             return View();
         }
 
@@ -47,16 +58,18 @@ namespace ENETCareMVCApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ClientID,ClientName,Address,District")] Client client)
+        public ActionResult Create([Bind(Include = "ClientID,ClientName,Address,DistrictID")] Client client)
         {
             string loginName = ViewBag.UserName;
             using (DBContext dbContext = new DBContext())
             {
                 var district = from u in dbContext.Users
-                                   where u.LoginName.Equals(loginName)
-                                   select u.District;
+                               where u.LoginName.Equals(loginName)
+                               select u.District;
 
-                client.District = (District)district;
+                District aDistrict = (District)district;
+                client.District = aDistrict;
+                client.District.DistrictID = aDistrict.DistrictID;
             }
             if (ModelState.IsValid)
             {

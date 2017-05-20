@@ -200,6 +200,7 @@
     <Compile Include="Controllers\DistrictController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SiteEngineerController.cs" />
     <Compile Include="DAL\DBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -296,6 +297,7 @@
     <Content Include="Views\Client\Details.cshtml" />
     <Content Include="Views\Client\Edit.cshtml" />
     <Content Include="Views\Client\Index.cshtml" />
+    <Content Include="Views\SiteEngineer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

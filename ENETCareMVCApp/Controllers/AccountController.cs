@@ -467,7 +467,7 @@ namespace ENETCareMVCApp.Controllers
                 return Redirect(returnUrl);
             }
             if (role.Equals("SiteEngineer"))
-                return RedirectToAction("Index", "Client");
+                return RedirectToAction("Index", "SiteEngineer");
             else
                 return RedirectToAction("Index", "District");
         }
