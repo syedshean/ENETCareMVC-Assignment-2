@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\SiteEngineerController.cs" />
     <Compile Include="Controllers\DistrictController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InterventionsController.cs" />
@@ -309,6 +310,7 @@
     <Content Include="Views\Interventions\Details.cshtml" />
     <Content Include="Views\Interventions\Edit.cshtml" />
     <Content Include="Views\Interventions\Index.cshtml" />
+    <Content Include="Views\SiteEngineer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

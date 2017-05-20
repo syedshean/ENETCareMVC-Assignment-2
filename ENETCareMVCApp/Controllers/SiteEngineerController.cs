@@ -8,7 +8,7 @@ namespace ENETCareMVCApp.Controllers
 {
     public class SiteEngineerController : Controller
     {
-        // GET: SiteEngineer
+        // GET: Default
         public ActionResult Index()
         {
             return View();
