@@ -1,0 +1,80 @@
+﻿@model ENETCareMVCApp.Models.Intervention
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Intervention</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LabourRequired)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LabourRequired)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CostRequired)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CostRequired)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InterventionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InterventionDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InterventionState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InterventionState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RemainingLife)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RemainingLife)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastEditDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastEditDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -17,7 +17,10 @@ namespace ENETCareMVCApp.Models
         [Required]
         public float CostRequired {get; set;}
 
+        
         [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public string InterventionDate {get; set;}
 
         [Required]
