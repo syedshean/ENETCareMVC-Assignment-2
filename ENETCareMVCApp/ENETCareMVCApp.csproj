@@ -224,6 +224,10 @@
     <Compile Include="Migrations\201705200833558_DistrictID add3.Designer.cs">
       <DependentUpon>201705200833558_DistrictID add3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705210002335_Required fieldEdit.cs" />
+    <Compile Include="Migrations\201705210002335_Required fieldEdit.Designer.cs">
+      <DependentUpon>201705210002335_Required fieldEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Client.cs" />
@@ -341,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705200833558_DistrictID add3.resx">
       <DependentUpon>201705200833558_DistrictID add3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705210002335_Required fieldEdit.resx">
+      <DependentUpon>201705210002335_Required fieldEdit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ENETCareMVCApp.DAL;
 using ENETCareMVCApp.Models;
+using Microsoft.AspNet.Identity;
 
 namespace ENETCareMVCApp.Controllers
 {
@@ -40,8 +41,16 @@ namespace ENETCareMVCApp.Controllers
         // GET: Clients/Create
         public ActionResult Create()
         {
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName");
-            return View();
+            District userDistrict = GetUserDistrict();
+            Client aClientModel = new Client
+            {
+                District = userDistrict,
+                DistrictID = userDistrict.DistrictID,
+            };
+            return View(aClientModel);
+
+            //ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName");
+            //return View();
         }
 
         // POST: Clients/Create
@@ -57,8 +66,11 @@ namespace ENETCareMVCApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
+            // If insert fails
+            District userDistrict = GetUserDistrict();
+            client.DistrictID = userDistrict.DistrictID;
+            client.District = userDistrict;
+            //ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
             return View(client);
         }
 
@@ -129,7 +141,18 @@ namespace ENETCareMVCApp.Controllers
             }
             base.Dispose(disposing);
         }
-
+        //Returns the district of logged in user 
+        private District GetUserDistrict()
+        {
+            string logedUser = User.Identity.Name;
+            User currentUser = (db.Users.Where(u => u.LoginName == logedUser)).First();
+            if (currentUser == null)
+            {
+                RedirectToAction("Index", "Home");
+            }
+            District userDistrict = currentUser.District;
+            return userDistrict;
+        }
 
         [NonAction]
         public List<Client> GetClientListByDistrict(int districtID)

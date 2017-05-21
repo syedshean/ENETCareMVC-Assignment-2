@@ -10,7 +10,11 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+    //string districtName = "";
+    //{
+    //    districtName = ViewBag.DistrictName;
+    //}
+
     <div class="form-horizontal">
         <h4>Client</h4>
         <hr />
@@ -32,10 +36,16 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DistrictID, "DistrictID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DistrictID, "District Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("DistrictID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DistrictID, "", new { @class = "text-danger" })
+
+                @*@Html.LabelFor(model => model.DistrictID, Model.District.DistrictName , htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+                @Model.District.DistrictName
+                @Html.HiddenFor(m =>m.District, Model.District)
+                @Html.HiddenFor(m => m.DistrictID, Model.District.DistrictID)
+                @*@Html.DropDownList("DistrictID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DistrictID, "", new { @class = "text-danger" })*@
             </div>
         </div>
 

@@ -17,10 +17,11 @@ namespace ENETCareMVCApp.Models
         [Required]
         public string Address { set; get; }
 
+
+        [Required]
         [Display(Name ="District")]
         public int DistrictID { get; set; }
 
-        [Required]
         public virtual District District { set; get; }
 
         public virtual ICollection<Intervention> Interventions { set; get; }
