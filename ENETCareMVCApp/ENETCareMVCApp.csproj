@@ -331,6 +331,7 @@
     <Content Include="Views\Interventions\Details.cshtml" />
     <Content Include="Views\Interventions\Edit.cshtml" />
     <Content Include="Views\Interventions\Index.cshtml" />
+    <Content Include="Views\Interventions\PreviousInterventionList.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

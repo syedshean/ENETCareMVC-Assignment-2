@@ -22,6 +22,15 @@ namespace ENETCareMVCApp.Controllers
             return View(interventions.ToList());
         }
 
+        public ActionResult PreviousInterventionList()
+        {
+            string logedUser = User.Identity.Name;
+            //int userID = db.Interventions.Where(i=>i.User.LoginName==logedUser).FirstOrDefault().UserID;
+            int userID = Int32.Parse(GetUserIDByUserName(logedUser));
+            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType).Where(i=>i.UserID== userID);
+            return View(interventions.ToList());
+        }
+
         // GET: Interventions/Details/5
         public ActionResult Details(int? id)
         {
@@ -63,7 +72,7 @@ namespace ENETCareMVCApp.Controllers
             {
                 db.Interventions.Add(intervention);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("PreviousInterventionList");
             }
             string logedUser = User.Identity.Name;
             User currentUser = (db.Users.Where(u => u.LoginName == logedUser)).First();
@@ -143,6 +152,21 @@ namespace ENETCareMVCApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [NonAction]
+        public string GetUserIDByUserName(string userName)
+        {
+
+            string userID;
+            using (var db = new DBContext())
+            {
+                userID = (from u in db.Users
+                          where u.LoginName == userName
+                          select u.UserID).FirstOrDefault().ToString();
+
+            }
+            return userID;
         }
     }
 }
