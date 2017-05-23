@@ -13,6 +13,12 @@ namespace ENETCareMVCApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    "Account",
+            //    "Account/{action}/{id}",
+            //    defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
+            //);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

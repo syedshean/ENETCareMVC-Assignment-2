@@ -198,11 +198,11 @@
     <Compile Include="Controllers\AccountantController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\InterventionsController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\SiteEngineerController.cs" />
     <Compile Include="Controllers\DistrictController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InterventionsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DAL\DBContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -227,6 +227,14 @@
     <Compile Include="Migrations\201705210002335_Required fieldEdit.cs" />
     <Compile Include="Migrations\201705210002335_Required fieldEdit.Designer.cs">
       <DependentUpon>201705210002335_Required fieldEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705231102432_AddRequiredfield4.cs" />
+    <Compile Include="Migrations\201705231102432_AddRequiredfield4.Designer.cs">
+      <DependentUpon>201705231102432_AddRequiredfield4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705231106299_AddRequiredfield5.cs" />
+    <Compile Include="Migrations\201705231106299_AddRequiredfield5.Designer.cs">
+      <DependentUpon>201705231106299_AddRequiredfield5.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -310,11 +318,6 @@
     <Content Include="Views\District\Details.cshtml" />
     <Content Include="Views\District\Edit.cshtml" />
     <Content Include="Views\District\Index.cshtml" />
-    <Content Include="Views\Interventions\Create.cshtml" />
-    <Content Include="Views\Interventions\Delete.cshtml" />
-    <Content Include="Views\Interventions\Details.cshtml" />
-    <Content Include="Views\Interventions\Edit.cshtml" />
-    <Content Include="Views\Interventions\Index.cshtml" />
     <Content Include="Views\SiteEngineer\Index.cshtml" />
     <Content Include="Views\Clients\Create.cshtml" />
     <Content Include="Views\Clients\Delete.cshtml" />
@@ -323,6 +326,11 @@
     <Content Include="Views\Clients\Index.cshtml" />
     <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\Accountant\Index.cshtml" />
+    <Content Include="Views\Interventions\Create.cshtml" />
+    <Content Include="Views\Interventions\Delete.cshtml" />
+    <Content Include="Views\Interventions\Details.cshtml" />
+    <Content Include="Views\Interventions\Edit.cshtml" />
+    <Content Include="Views\Interventions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -348,6 +356,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705210002335_Required fieldEdit.resx">
       <DependentUpon>201705210002335_Required fieldEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705231102432_AddRequiredfield4.resx">
+      <DependentUpon>201705231102432_AddRequiredfield4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705231106299_AddRequiredfield5.resx">
+      <DependentUpon>201705231106299_AddRequiredfield5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

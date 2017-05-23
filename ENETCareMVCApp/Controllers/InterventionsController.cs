@@ -18,7 +18,8 @@ namespace ENETCareMVCApp.Controllers
         // GET: Interventions
         public ActionResult Index()
         {
-            return View(db.Interventions.ToList());
+            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType);
+            return View(interventions.ToList());
         }
 
         // GET: Interventions/Details/5
@@ -39,7 +40,16 @@ namespace ENETCareMVCApp.Controllers
         // GET: Interventions/Create
         public ActionResult Create()
         {
-            return View();
+            string logedUser = User.Identity.Name;
+            User currentUser = (db.Users.Where(u => u.LoginName == logedUser)).First();
+            Intervention aInterventionModel = new Intervention
+            {
+                User = currentUser,
+                UserID = currentUser.UserID,
+            };
+            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName");
+            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName");
+            return View(aInterventionModel);
         }
 
         // POST: Interventions/Create
@@ -47,7 +57,7 @@ namespace ENETCareMVCApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,Notes,RemainingLife,LastEditDate")] Intervention intervention)
+        public ActionResult Create([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,UserID,InterventionTypeID")] Intervention intervention)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +65,13 @@ namespace ENETCareMVCApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            string logedUser = User.Identity.Name;
+            User currentUser = (db.Users.Where(u => u.LoginName == logedUser)).First();
+            intervention.UserID = currentUser.UserID;
+            intervention.User = currentUser;
 
+            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
+            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
             return View(intervention);
         }
 
@@ -71,6 +87,8 @@ namespace ENETCareMVCApp.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
+            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
             return View(intervention);
         }
 
@@ -79,7 +97,7 @@ namespace ENETCareMVCApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,Notes,RemainingLife,LastEditDate")] Intervention intervention)
+        public ActionResult Edit([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,Notes,RemainingLife,LastEditDate,ClientID,UserID,ApproveUserID,InterventionTypeID")] Intervention intervention)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +105,8 @@ namespace ENETCareMVCApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
+            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
             return View(intervention);
         }
 
@@ -123,81 +143,6 @@ namespace ENETCareMVCApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        [NonAction]
-        public List<Intervention> GetInterventionListByClient(int clientID)
-        {
-            List<Intervention> anInterventionList = new List<Intervention>();
-            using (var db = new DBContext())
-            {
-                anInterventionList = (from i in db.Interventions
-                                      where i.Client.ClientID == clientID
-                                      select i).ToList();
-
-            }
-
-            return anInterventionList;
-        }
-
-        [NonAction]
-        public List<Intervention> GetInterventionListByUserID(int userID)
-        {
-            List<Intervention> anInterventionList = new List<Intervention>();
-            using (var db = new DBContext())
-            {
-                anInterventionList = (from i in db.Interventions
-                                      where i.User.UserID == userID && (i.InterventionState == InterventionState.Approved || i.InterventionState == InterventionState.Completed)
-                                      select i).ToList();
-
-            }
-
-            return anInterventionList;
-        }
-
-        [NonAction]
-        public List<Intervention> GetInterventionList()
-        {
-            List<Intervention> anInterventionList = new List<Intervention>();
-            using (var db = new DBContext())
-            {
-                anInterventionList = (from i in db.Interventions
-                                      where i.InterventionState == InterventionState.Approved || i.InterventionState == InterventionState.Completed
-                                      select i).ToList();
-
-            }
-
-            return anInterventionList;
-        }
-
-        [NonAction]
-        public Intervention GetInterventionByInterventionID(int interventionID)
-        {
-            Intervention anIntervention = new Intervention();
-            using (var db = new DBContext())
-            {
-                anIntervention = (from i in db.Interventions
-                                  where i.InterventionID == interventionID
-                                  select i).FirstOrDefault<Intervention>();
-
-            }
-
-            return anIntervention;
-        }
-
-        [NonAction]
-        public List<Intervention> GetInterventionListByApprovalUserID(int userID)
-        {
-            List<Intervention> anInterventionList = new List<Intervention>();
-            using (var db = new DBContext())
-            {
-                anInterventionList = (from i in db.Interventions
-                                      where i.ApprovalUser.UserID == userID && i.InterventionState == InterventionState.Approved 
-                                      select i).ToList();
-
-            }
-
-            return anInterventionList;
         }
     }
 }

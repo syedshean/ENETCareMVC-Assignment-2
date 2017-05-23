@@ -12,18 +12,24 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Client.ClientName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InterventionType.InterventionTypeName)
+        </th>
+        @*<th>
             @Html.DisplayNameFor(model => model.LabourRequired)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CostRequired)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.InterventionDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.InterventionState)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Notes)
         </th>
         <th>
@@ -31,25 +37,37 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LastEditDate)
-        </th>
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.ApproveUserID)
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Client.ClientName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InterventionType.InterventionTypeName)
+        </td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.LabourRequired)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CostRequired)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.InterventionDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.InterventionState)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Notes)
         </td>
         <td>
@@ -57,7 +75,13 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LastEditDate)
-        </td>
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.ApproveUserID)
+        </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.InterventionID }) |
             @Html.ActionLink("Details", "Details", new { id=item.InterventionID }) |

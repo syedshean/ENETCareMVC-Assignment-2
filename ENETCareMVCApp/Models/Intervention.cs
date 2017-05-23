@@ -38,18 +38,20 @@ namespace ENETCareMVCApp.Models
 
         public string LastEditDate {get; set;}
 
+        [Required]
         [Display(Name = "Client Name")]
         public int ClientID { get; set; }
 
 
-        [Required]
+        
         public virtual Client Client { get; set; }
 
+        [Required]
         [Display(Name = "User Name")]
         public int UserID { get; set; }
 
 
-        [Required]
+        
         public virtual User User { get; set; }
 
         [Display(Name = "Approve User Name")]
@@ -58,6 +60,7 @@ namespace ENETCareMVCApp.Models
 
         public virtual User ApprovalUser { get; set; }
 
+        [Required]
         [Display(Name = "Intervention Type Name")]
         public int InterventionTypeID { get; set; }
 
