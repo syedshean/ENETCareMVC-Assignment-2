@@ -22,6 +22,12 @@ namespace ENETCareMVCApp.Controllers
             return View(interventions.ToList());
         }
 
+        public ActionResult ProposedInterventionList()
+        {
+            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType).Include(i =>i.User).Where(i=>i.InterventionState==InterventionState.Proposed);
+            return View(interventions.ToList());
+        }
+
         public ActionResult PreviousInterventionList()
         {
             string logedUser = User.Identity.Name;
