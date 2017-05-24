@@ -106,11 +106,13 @@ namespace ENETCareMVCApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,Notes,RemainingLife,LastEditDate,ClientID,UserID,ApproveUserID,InterventionTypeID")] Intervention intervention)
+        public ActionResult Edit([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,InterventionTypeID")] Intervention intervention)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(intervention).State = EntityState.Modified;
+                db.Interventions.Attach(intervention);
+                db.Entry(intervention).Property(i => i.InterventionState).IsModified = true;
+                //db.Entry(intervention).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
