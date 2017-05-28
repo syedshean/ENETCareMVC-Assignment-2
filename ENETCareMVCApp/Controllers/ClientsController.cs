@@ -155,14 +155,17 @@ namespace ENETCareMVCApp.Controllers
 
                 foreach (var intervention in interventions)
                 {
-                    var client = (from c in aClientList where c.ClientID == intervention.ClientID select c).First();
-                    ClientWithInterventionModel aClientWithIntervention = new ClientWithInterventionModel();
-                    aClientWithIntervention.aClient = client;
-                    aClientWithIntervention.DistrictName = GetUserDistrict().DistrictName;
-                    aClientWithIntervention.InterventionID = intervention.InterventionID;
-                    aClientWithIntervention.InterventionTypeName = GetInterventionTypeByInterventionTypeID(intervention.InterventionTypeID).InterventionTypeName;
-                    aClientWithIntervention.UserName = GetUserDetailsByUserID(intervention.UserID).UserName;
-                    aClientWithInterventionList.Add(aClientWithIntervention);
+                    var client = aClientList.Where(c => c.ClientID == intervention.ClientID).FirstOrDefault();
+                    if(client != null)
+                    {
+                        ClientWithInterventionModel aClientWithIntervention = new ClientWithInterventionModel();
+                        aClientWithIntervention.aClient = client;
+                        aClientWithIntervention.DistrictName = GetUserDistrict().DistrictName;
+                        aClientWithIntervention.InterventionID = intervention.InterventionID;
+                        aClientWithIntervention.InterventionTypeName = GetInterventionTypeByInterventionTypeID(intervention.InterventionTypeID).InterventionTypeName;
+                        aClientWithIntervention.UserName = GetUserDetailsByUserID(intervention.UserID).UserName;
+                        aClientWithInterventionList.Add(aClientWithIntervention);
+                    }
                 }
             }
             return View(aClientWithInterventionList);
