@@ -3,7 +3,7 @@ namespace ENETCareMVCApp.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class DatabaseCreate : DbMigration
+    public partial class Newdatabase : DbMigration
     {
         public override void Up()
         {
@@ -14,11 +14,11 @@ namespace ENETCareMVCApp.Migrations
                         ClientID = c.Int(nullable: false, identity: true),
                         ClientName = c.String(nullable: false),
                         Address = c.String(nullable: false),
-                        District_DistrictID = c.Int(nullable: false),
+                        DistrictID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ClientID)
-                .ForeignKey("dbo.District", t => t.District_DistrictID, cascadeDelete: true)
-                .Index(t => t.District_DistrictID);
+                .ForeignKey("dbo.District", t => t.DistrictID)
+                .Index(t => t.DistrictID);
             
             CreateTable(
                 "dbo.District",
@@ -35,17 +35,16 @@ namespace ENETCareMVCApp.Migrations
                     {
                         UserID = c.Int(nullable: false, identity: true),
                         UserName = c.String(nullable: false),
-                        LoginName = c.Int(nullable: false),
+                        LoginName = c.String(nullable: false),
                         Email = c.String(nullable: false),
-                        Password = c.String(nullable: false),
                         UserType = c.String(nullable: false),
                         MaxHour = c.Int(nullable: false),
                         MaxCost = c.Int(nullable: false),
-                        District_DistrictID = c.Int(),
+                        DistrictID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.UserID)
-                .ForeignKey("dbo.District", t => t.District_DistrictID)
-                .Index(t => t.District_DistrictID);
+                .ForeignKey("dbo.District", t => t.DistrictID)
+                .Index(t => t.DistrictID);
             
             CreateTable(
                 "dbo.Intervention",
@@ -55,27 +54,22 @@ namespace ENETCareMVCApp.Migrations
                         LabourRequired = c.Single(nullable: false),
                         CostRequired = c.Single(nullable: false),
                         InterventionDate = c.String(nullable: false),
-                        InterventionState = c.String(nullable: false),
+                        InterventionState = c.Int(nullable: false),
                         Notes = c.String(),
                         RemainingLife = c.Int(),
                         LastEditDate = c.String(),
-                        ApprovalUser_UserID = c.Int(),
-                        Client_ClientID = c.Int(nullable: false),
-                        InterventionType_InterventionTypeID = c.Int(),
-                        User_UserID = c.Int(nullable: false),
-                        User_UserID1 = c.Int(),
+                        ClientID = c.Int(nullable: false),
+                        UserID = c.Int(nullable: false),
+                        ApproveUserID = c.Int(nullable: false),
+                        InterventionTypeID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.InterventionID)
-                .ForeignKey("dbo.User", t => t.ApprovalUser_UserID)
-                .ForeignKey("dbo.Client", t => t.Client_ClientID, cascadeDelete: true)
-                .ForeignKey("dbo.InterventionType", t => t.InterventionType_InterventionTypeID)
-                .ForeignKey("dbo.User", t => t.User_UserID, cascadeDelete: true)
-                .ForeignKey("dbo.User", t => t.User_UserID1)
-                .Index(t => t.ApprovalUser_UserID)
-                .Index(t => t.Client_ClientID)
-                .Index(t => t.InterventionType_InterventionTypeID)
-                .Index(t => t.User_UserID)
-                .Index(t => t.User_UserID1);
+                .ForeignKey("dbo.Client", t => t.ClientID)
+                .ForeignKey("dbo.InterventionType", t => t.InterventionTypeID)
+                .ForeignKey("dbo.User", t => t.UserID)
+                .Index(t => t.ClientID)
+                .Index(t => t.UserID)
+                .Index(t => t.InterventionTypeID);
             
             CreateTable(
                 "dbo.InterventionType",
@@ -92,20 +86,16 @@ namespace ENETCareMVCApp.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Client", "District_DistrictID", "dbo.District");
-            DropForeignKey("dbo.Intervention", "User_UserID1", "dbo.User");
-            DropForeignKey("dbo.Intervention", "User_UserID", "dbo.User");
-            DropForeignKey("dbo.Intervention", "InterventionType_InterventionTypeID", "dbo.InterventionType");
-            DropForeignKey("dbo.Intervention", "Client_ClientID", "dbo.Client");
-            DropForeignKey("dbo.Intervention", "ApprovalUser_UserID", "dbo.User");
-            DropForeignKey("dbo.User", "District_DistrictID", "dbo.District");
-            DropIndex("dbo.Intervention", new[] { "User_UserID1" });
-            DropIndex("dbo.Intervention", new[] { "User_UserID" });
-            DropIndex("dbo.Intervention", new[] { "InterventionType_InterventionTypeID" });
-            DropIndex("dbo.Intervention", new[] { "Client_ClientID" });
-            DropIndex("dbo.Intervention", new[] { "ApprovalUser_UserID" });
-            DropIndex("dbo.User", new[] { "District_DistrictID" });
-            DropIndex("dbo.Client", new[] { "District_DistrictID" });
+            DropForeignKey("dbo.User", "DistrictID", "dbo.District");
+            DropForeignKey("dbo.Intervention", "UserID", "dbo.User");
+            DropForeignKey("dbo.Intervention", "InterventionTypeID", "dbo.InterventionType");
+            DropForeignKey("dbo.Intervention", "ClientID", "dbo.Client");
+            DropForeignKey("dbo.Client", "DistrictID", "dbo.District");
+            DropIndex("dbo.Intervention", new[] { "InterventionTypeID" });
+            DropIndex("dbo.Intervention", new[] { "UserID" });
+            DropIndex("dbo.Intervention", new[] { "ClientID" });
+            DropIndex("dbo.User", new[] { "DistrictID" });
+            DropIndex("dbo.Client", new[] { "DistrictID" });
             DropTable("dbo.InterventionType");
             DropTable("dbo.Intervention");
             DropTable("dbo.User");

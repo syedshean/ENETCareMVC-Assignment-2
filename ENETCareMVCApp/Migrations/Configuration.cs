@@ -5,14 +5,14 @@ namespace ENETCareMVCApp.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ENETCareMVCApp.DAL.DBContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ENETCareMVCApp.Models.DBContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ENETCareMVCApp.DAL.DBContext context)
+        protected override void Seed(ENETCareMVCApp.Models.DBContext context)
         {
             //  This method will be called after migrating to the latest version.
 

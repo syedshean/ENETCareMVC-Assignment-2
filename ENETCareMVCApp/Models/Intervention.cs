@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -32,6 +33,7 @@ namespace ENETCareMVCApp.Models
         
         public InterventionState InterventionState { set; get; }
 
+        [DataType(DataType.MultilineText)]
         public string Notes {get; set;}
 
         public int? RemainingLife {get; set;}
@@ -43,7 +45,7 @@ namespace ENETCareMVCApp.Models
         public int ClientID { get; set; }
 
 
-        
+        [ForeignKey("ClientID")]
         public virtual Client Client { get; set; }
 
         [Required]
@@ -51,19 +53,20 @@ namespace ENETCareMVCApp.Models
         public int UserID { get; set; }
 
 
-        
+        [ForeignKey("UserID")]
         public virtual User User { get; set; }
 
         [Display(Name = "Approve User Name")]
         public int ApproveUserID { get; set; }
-
-
+        
+        [ForeignKey("UserID")]
         public virtual User ApprovalUser { get; set; }
 
         [Required]
         [Display(Name = "Intervention Type Name")]
         public int InterventionTypeID { get; set; }
 
+        [ForeignKey("InterventionTypeID")]
         public virtual InterventionType InterventionType {get; set;}
     }
 }

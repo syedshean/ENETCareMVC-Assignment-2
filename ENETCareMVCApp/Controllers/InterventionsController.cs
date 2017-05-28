@@ -6,8 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ENETCareMVCApp.DAL;
 using ENETCareMVCApp.Models;
+using System.Globalization;
 
 namespace ENETCareMVCApp.Controllers
 {
@@ -151,6 +151,46 @@ namespace ENETCareMVCApp.Controllers
             db.Interventions.Remove(intervention);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult EditQMI(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Intervention intervention = db.Interventions.Find(id);
+            if (intervention == null)
+            {
+                return HttpNotFound();
+            }
+            string lastEditDate = intervention.LastEditDate;
+            if (lastEditDate == null)
+                intervention.LastEditDate = "Never updated before";
+            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
+            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
+            return View(intervention);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditQMI([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,InterventionTypeID, Notes, RemainingLife")] Intervention intervention) //InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,InterventionTypeID
+        {
+            if (ModelState.IsValid)
+            {
+                intervention.LastEditDate = DateTime.Now.ToString("yyyy-MM-dd");
+                db.Interventions.Attach(intervention);
+                //db.Entry(intervention).Property(i => i.InterventionState).IsModified = true;
+                db.Entry(intervention).Property(i => i.Notes).IsModified = true;
+                db.Entry(intervention).Property(i => i.RemainingLife).IsModified = true;
+                db.Entry(intervention).Property(i => i.LastEditDate).IsModified = true;
+                //db.Entry(intervention).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
+            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
+            return View(intervention);
         }
 
         protected override void Dispose(bool disposing)

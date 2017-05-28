@@ -205,39 +205,20 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="DAL\DBContext.cs" />
+    <Compile Include="Migrations\201705280232484_New database.cs" />
+    <Compile Include="Migrations\201705280232484_New database.Designer.cs">
+      <DependentUpon>201705280232484_New database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705280745127_Multiline add.cs" />
+    <Compile Include="Migrations\201705280745127_Multiline add.Designer.cs">
+      <DependentUpon>201705280745127_Multiline add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ClientWithInterventionModel.cs" />
+    <Compile Include="Models\DBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705150632418_Database Create.cs" />
-    <Compile Include="Migrations\201705150632418_Database Create.Designer.cs">
-      <DependentUpon>201705150632418_Database Create.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705151053083_Database update.cs" />
-    <Compile Include="Migrations\201705151053083_Database update.Designer.cs">
-      <DependentUpon>201705151053083_Database update.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705151057105_Database update3.cs" />
-    <Compile Include="Migrations\201705151057105_Database update3.Designer.cs">
-      <DependentUpon>201705151057105_Database update3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705200833558_DistrictID add3.cs" />
-    <Compile Include="Migrations\201705200833558_DistrictID add3.Designer.cs">
-      <DependentUpon>201705200833558_DistrictID add3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705210002335_Required fieldEdit.cs" />
-    <Compile Include="Migrations\201705210002335_Required fieldEdit.Designer.cs">
-      <DependentUpon>201705210002335_Required fieldEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705231102432_AddRequiredfield4.cs" />
-    <Compile Include="Migrations\201705231102432_AddRequiredfield4.Designer.cs">
-      <DependentUpon>201705231102432_AddRequiredfield4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705231106299_AddRequiredfield5.cs" />
-    <Compile Include="Migrations\201705231106299_AddRequiredfield5.Designer.cs">
-      <DependentUpon>201705231106299_AddRequiredfield5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\District.cs" />
@@ -253,10 +234,6 @@
     <Content Include="App_Data\aspnet-ENETCareMVCApp-20170515112325.mdf" />
     <Content Include="App_Data\aspnet-ENETCareMVCApp-20170515112325_log.ldf">
       <DependentUpon>aspnet-ENETCareMVCApp-20170515112325.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\ENETCareMVCAppDatabase.mdf" />
-    <Content Include="App_Data\ENETCareMVCAppDatabase_log.ldf">
-      <DependentUpon>ENETCareMVCAppDatabase.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -339,6 +316,8 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Interventions\ProposedInterventionList.cshtml" />
+    <Content Include="Views\Clients\ClientListWithIntervention.cshtml" />
+    <Content Include="Views\Interventions\EditQMI.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -350,26 +329,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705150632418_Database Create.resx">
-      <DependentUpon>201705150632418_Database Create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705280232484_New database.resx">
+      <DependentUpon>201705280232484_New database.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705151053083_Database update.resx">
-      <DependentUpon>201705151053083_Database update.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705151057105_Database update3.resx">
-      <DependentUpon>201705151057105_Database update3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705200833558_DistrictID add3.resx">
-      <DependentUpon>201705200833558_DistrictID add3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705210002335_Required fieldEdit.resx">
-      <DependentUpon>201705210002335_Required fieldEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705231102432_AddRequiredfield4.resx">
-      <DependentUpon>201705231102432_AddRequiredfield4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705231106299_AddRequiredfield5.resx">
-      <DependentUpon>201705231106299_AddRequiredfield5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705280745127_Multiline add.resx">
+      <DependentUpon>201705280745127_Multiline add.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

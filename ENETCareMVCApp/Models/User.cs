@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -29,8 +30,17 @@ namespace ENETCareMVCApp.Models
 
         public int MaxCost { set; get; }
 
+        [Required]
+        [Display(Name = "District")]
+        public int DistrictID { get; set; }
+
+        [ForeignKey("DistrictID")]
         public virtual District District { set; get; }
 
+        [InverseProperty("User")]
         public virtual ICollection<Intervention> Interventions { set; get; }
+
+        [InverseProperty("ApprovalUser")]
+        public virtual ICollection<Intervention> ApprovedInterventions { set; get; }
     }
 }

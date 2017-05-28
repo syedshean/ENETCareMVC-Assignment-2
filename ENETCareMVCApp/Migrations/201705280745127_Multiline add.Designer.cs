@@ -7,13 +7,13 @@ namespace ENETCareMVCApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class RequiredfieldEdit : IMigrationMetadata
+    public sealed partial class Multilineadd : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RequiredfieldEdit));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Multilineadd));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705210002335_Required fieldEdit"; }
+            get { return "201705280745127_Multiline add"; }
         }
         
         string IMigrationMetadata.Source

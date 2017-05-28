@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -22,6 +23,7 @@ namespace ENETCareMVCApp.Models
         [Display(Name ="District")]
         public int DistrictID { get; set; }
 
+        [ForeignKey("DistrictID")]
         public virtual District District { set; get; }
 
         public virtual ICollection<Intervention> Interventions { set; get; }

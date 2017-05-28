@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ENETCareMVCApp.DAL;
 using ENETCareMVCApp.Models;
 using Microsoft.AspNet.Identity;
 
@@ -141,6 +140,34 @@ namespace ENETCareMVCApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        // ClientList with Interventions
+        public ActionResult ClientListWithIntervention()
+        {
+            DbSet<Intervention> interventions;
+            List<Client> aClientList;
+            List<ClientWithInterventionModel> aClientWithInterventionList = new List<ClientWithInterventionModel>();
+            using (var db = new DBContext())
+            {
+                interventions = db.Interventions;
+                aClientList = GetClientListByDistrict(GetUserDistrict().DistrictID);
+
+                foreach (var intervention in interventions)
+                {
+                    var client = (from c in aClientList where c.ClientID == intervention.ClientID select c).First();
+                    ClientWithInterventionModel aClientWithIntervention = new ClientWithInterventionModel();
+                    aClientWithIntervention.aClient = client;
+                    aClientWithIntervention.DistrictName = GetUserDistrict().DistrictName;
+                    aClientWithIntervention.InterventionID = intervention.InterventionID;
+                    aClientWithIntervention.InterventionTypeName = GetInterventionTypeByInterventionTypeID(intervention.InterventionTypeID).InterventionTypeName;
+                    aClientWithIntervention.UserName = GetUserDetailsByUserID(intervention.UserID).UserName;
+                    aClientWithInterventionList.Add(aClientWithIntervention);
+                }
+            }
+            return View(aClientWithInterventionList);
+        }
+
         //Returns the district of logged in user 
         private District GetUserDistrict()
         {
@@ -196,6 +223,31 @@ namespace ENETCareMVCApp.Controllers
             return clientName;
         }
 
+        [NonAction]
+        public InterventionType GetInterventionTypeByInterventionTypeID(int interventionTypeID)
+        {
+            InterventionType anInterventionType;
+            using (var db = new DBContext())
+            {
+                anInterventionType = (from i in db.InterventionTypes
+                                      where i.InterventionTypeID == interventionTypeID
+                                      select i).First();
+            }
+            return anInterventionType;
+        }
+
+        [NonAction]
+        public User GetUserDetailsByUserID(int userID)
+        {
+            User anUser;
+            using (var db = new DBContext())
+            {
+                anUser = (from u in db.Users
+                          where u.UserID == userID
+                          select u).First();
+            }
+            return anUser;
+        }
         //[NonAction]
         //public bool IsUserNameExist(string clientName)
         //{

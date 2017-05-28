@@ -7,13 +7,13 @@ namespace ENETCareMVCApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddRequiredfield5 : IMigrationMetadata
+    public sealed partial class Newdatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddRequiredfield5));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Newdatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705231106299_AddRequiredfield5"; }
+            get { return "201705280232484_New database"; }
         }
         
         string IMigrationMetadata.Source

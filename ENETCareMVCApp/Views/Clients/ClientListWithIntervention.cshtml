@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ENETCareMVCApp.Models.ClientWithInterventionModel>
+@{
+    ViewBag.Title = "Client List With Interventions";
+}
+
+<h2>Client List With Interventions</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DistrictName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aClient.ClientName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aClient.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InterventionTypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DistrictName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.aClient.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.aClient.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InterventionTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => item.InterventionID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit QMI", "EditQMI", "Interventions", new { id = item.InterventionID }, null) 
+                   @* @Html.ActionLink("Details", "Details", new { id = item.aClient.ClientID }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.aClient.ClientID })*@
+            </td>
+        </tr>
+    }
+
+</table>
