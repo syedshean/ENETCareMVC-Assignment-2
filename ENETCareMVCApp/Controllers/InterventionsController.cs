@@ -31,8 +31,8 @@ namespace ENETCareMVCApp.Controllers
         public ActionResult PreviousInterventionList()
         {
             string logedUser = User.Identity.Name;
-            //int userID = db.Interventions.Where(i=>i.User.LoginName==logedUser).FirstOrDefault().UserID;
-            int userID = Int32.Parse(GetUserIDByUserName(logedUser));
+            int userID = db.Users.Where(i=>i.LoginName==logedUser).FirstOrDefault().UserID;
+            //int userID = Int32.Parse(GetUserIDByUserName(logedUser));
             var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType).Where(i=>i.UserID== userID);
             return View(interventions.ToList());
         }
@@ -62,7 +62,8 @@ namespace ENETCareMVCApp.Controllers
                 User = currentUser,
                 UserID = currentUser.UserID,
             };
-            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName");
+            int districtID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().DistrictID; 
+            ViewBag.ClientID = new SelectList(db.Clients.Where(i=>i.DistrictID==districtID), "ClientID", "ClientName");
             ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName");
             return View(aInterventionModel);
         }
@@ -86,7 +87,8 @@ namespace ENETCareMVCApp.Controllers
             intervention.UserID = currentUser.UserID;
             intervention.User = currentUser;
 
-            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
+            int districtID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().DistrictID;
+            ViewBag.ClientID = new SelectList(db.Clients.Where(i => i.DistrictID == districtID), "ClientID", "ClientName", intervention.ClientID);
             ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
             return View(intervention);
         }
@@ -209,64 +211,6 @@ namespace ENETCareMVCApp.Controllers
             return View(anIntervention);
         }
 
-        public ActionResult TotalCostByEngineerReport()
-        {
-            List<SiteEngineerTotalCost> resultList = new List<SiteEngineerTotalCost>();
-            List<User> anUserList = db.Users.Where(u => u.UserType == "SiteEngineer").OrderBy(u => u.UserName).ToList();
-            foreach(var user in anUserList)
-            {
-                SiteEngineerTotalCost result = db.Interventions
-                           .Where(i => (i.InterventionState == InterventionState.Completed) && (i.UserID == user.UserID))
-                           .GroupBy(i => i.UserID)
-                           .Select(setc => new SiteEngineerTotalCost
-                           {
-                               UserName = user.UserName,
-                               TotalCost = setc.Sum(i => i.CostRequired).ToString(),
-                               TotalLabour = setc.Sum(i => i.LabourRequired).ToString(),
-                               DistrictName = setc.FirstOrDefault().User.District.DistrictName
-                            }).FirstOrDefault();
-                if(result == null)
-                {
-                    result = new SiteEngineerTotalCost();
-                    result.UserName = user.UserName;
-                    result.TotalCost = "0";
-                    result.TotalLabour = "0";
-                    result.DistrictName = user.District.DistrictName;
-                }
-                resultList.Add(result);
-            } 
-            return View(resultList);
-        }
-
-        public ActionResult AverageCostByEngineerReport()
-        {
-            List<SiteEngineerTotalCost> resultList = new List<SiteEngineerTotalCost>();
-            List<User> anUserList = db.Users.Where(u => u.UserType == "SiteEngineer").OrderBy(u => u.UserName).ToList();
-            foreach (var user in anUserList)
-            {
-                SiteEngineerTotalCost result = db.Interventions
-                           .Where(i => (i.InterventionState == InterventionState.Completed) && (i.UserID == user.UserID))
-                           .GroupBy(i => i.UserID)
-                           .Select(setc => new SiteEngineerTotalCost
-                           {
-                               UserName = user.UserName,
-                               TotalCost = setc.Average(i => i.CostRequired).ToString(),
-                               TotalLabour = setc.Average(i => i.LabourRequired).ToString(),
-                               DistrictName = setc.FirstOrDefault().User.District.DistrictName
-                           }).FirstOrDefault();
-                if (result == null)
-                {
-                    result = new SiteEngineerTotalCost();
-                    result.UserName = user.UserName;
-                    result.TotalCost = "0";
-                    result.TotalLabour = "0";
-                    result.DistrictName = user.District.DistrictName;
-                }
-                resultList.Add(result);
-            }
-            return View(resultList);
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -290,5 +234,18 @@ namespace ENETCareMVCApp.Controllers
             return userID;
         }
 
+        [NonAction]
+        public string GetDistrictIDByUserName(string userName)
+        {
+            string districtID;
+            using (var db = new DBContext())
+            {
+                districtID = (from u in db.Users
+                          where u.LoginName == userName
+                          select u.DistrictID).FirstOrDefault().ToString();
+
+            }
+            return districtID;
+        }
     }
 }

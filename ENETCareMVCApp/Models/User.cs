@@ -12,7 +12,7 @@ namespace ENETCareMVCApp.Models
         [Required, Key]
         public int UserID { set; get; }
 
-        [Required]
+        [Required]        
         public string UserName { set; get; }
 
         [Required]
