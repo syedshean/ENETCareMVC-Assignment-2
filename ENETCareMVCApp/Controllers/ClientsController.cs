@@ -145,12 +145,12 @@ namespace ENETCareMVCApp.Controllers
         // ClientList with Interventions
         public ActionResult ClientListWithIntervention()
         {
-            DbSet<Intervention> interventions;
+            List<Intervention> interventions;
             List<Client> aClientList;
             List<ClientWithInterventionModel> aClientWithInterventionList = new List<ClientWithInterventionModel>();
             using (var db = new DBContext())
             {
-                interventions = db.Interventions;
+                interventions = db.Interventions.Where(i => i.InterventionState != InterventionState.Cancelled).ToList();
                 aClientList = GetClientListByDistrict(GetUserDistrict().DistrictID);
 
                 foreach (var intervention in interventions)

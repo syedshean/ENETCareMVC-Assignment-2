@@ -14,7 +14,7 @@ namespace ENETCareMVCApp.Models
         Completed = 3,
         Cancelled = 4
     };
-    public class Intervention
+    public class Intervention : IValidatableObject
     {
         [Required, Key]
         public int InterventionID { set; get; }
@@ -68,5 +68,21 @@ namespace ENETCareMVCApp.Models
 
         [ForeignKey("InterventionTypeID")]
         public virtual InterventionType InterventionType {get; set;}
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if ((RemainingLife < 0) || (RemainingLife > 100))
+            {
+                yield return new ValidationResult("Remaining life must be between 0 to 100", new[] { "RemainingLife" });
+            }
+
+            if(Notes != null)
+            {
+                if (Notes.ToCharArray().Length > 30000)
+                {
+                    yield return new ValidationResult("Notes has to be within 5000 words", new[] { "Notes" });
+                }
+            }
+        }
     }
 }

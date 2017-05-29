@@ -74,6 +74,7 @@ namespace ENETCareMVCApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,UserID,InterventionTypeID")] Intervention intervention)
         {
+            intervention.RemainingLife = 100;
             if (ModelState.IsValid)
             {
                 db.Interventions.Add(intervention);
@@ -164,6 +165,12 @@ namespace ENETCareMVCApp.Controllers
             {
                 return HttpNotFound();
             }
+            if ((intervention.InterventionState == InterventionState.Proposed) || (intervention.InterventionState == InterventionState.Approved))
+            {
+                ViewBag.Disabled = true;
+            }
+            else
+                ViewBag.Disabled = false;
             string lastEditDate = intervention.LastEditDate;
             if (lastEditDate == null)
                 intervention.LastEditDate = "Never updated before";
@@ -186,11 +193,20 @@ namespace ENETCareMVCApp.Controllers
                 db.Entry(intervention).Property(i => i.LastEditDate).IsModified = true;
                 //db.Entry(intervention).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ClientListWithIntervention","Clients");
             }
-            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
-            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
-            return View(intervention);
+            Intervention anIntervention = db.Interventions.Find(intervention.InterventionID);
+            if ((intervention.InterventionState == InterventionState.Proposed) || (intervention.InterventionState == InterventionState.Approved))
+            {
+                ViewBag.Disabled = true;
+            }
+            else
+                ViewBag.Disabled = false;
+
+            string lastEditDate = anIntervention.LastEditDate;
+            if (lastEditDate == null)
+                anIntervention.LastEditDate = "Never updated before";
+            return View(anIntervention);
         }
 
         protected override void Dispose(bool disposing)
@@ -205,7 +221,6 @@ namespace ENETCareMVCApp.Controllers
         [NonAction]
         public string GetUserIDByUserName(string userName)
         {
-
             string userID;
             using (var db = new DBContext())
             {
