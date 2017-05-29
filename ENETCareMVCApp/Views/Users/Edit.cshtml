@@ -16,12 +16,19 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.UserID)
+        @Html.HiddenFor(model => model.UserName)
+        @Html.HiddenFor(model => model.LoginName)
+        @Html.HiddenFor(model => model.Email)
+        @Html.HiddenFor(model => model.UserType)
+        @Html.HiddenFor(model => model.MaxHour)
+        @Html.HiddenFor(model => model.MaxCost)
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })   
                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+   
             </div>
         </div>
 
@@ -62,6 +69,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MaxCost, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.MaxCost, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DistrictID, "DistrictID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DistrictID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DistrictID, "", new { @class = "text-danger" })
             </div>
         </div>
 

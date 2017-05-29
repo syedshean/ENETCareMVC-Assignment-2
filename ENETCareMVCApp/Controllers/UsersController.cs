@@ -17,13 +17,13 @@ namespace ENETCareMVCApp.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.Include(i => i.District).ToList());
+            var users = db.Users.Include(u => u.District).Where(i=>i.UserType!= "Accountant");
+            return View(users.ToList());
         }
 
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
-  
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -39,6 +39,7 @@ namespace ENETCareMVCApp.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName");
             return View();
         }
 
@@ -47,7 +48,7 @@ namespace ENETCareMVCApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,UserName,LoginName,Email,UserType,MaxHour,MaxCost")] User user)
+        public ActionResult Create([Bind(Include = "UserID,UserName,LoginName,Email,UserType,MaxHour,MaxCost,DistrictID")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +57,7 @@ namespace ENETCareMVCApp.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", user.DistrictID);
             return View(user);
         }
 
@@ -71,6 +73,7 @@ namespace ENETCareMVCApp.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", user.DistrictID);
             return View(user);
         }
 
@@ -79,7 +82,7 @@ namespace ENETCareMVCApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,UserName,LoginName,Email,UserType,MaxHour,MaxCost")] User user)
+        public ActionResult Edit([Bind(Include = "UserID,UserName,LoginName,Email,UserType,MaxHour,MaxCost,DistrictID")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +90,7 @@ namespace ENETCareMVCApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", user.DistrictID);
             return View(user);
         }
 
