@@ -30,7 +30,7 @@ textarea {
     border-color:#306AB5 #2B5892 #274771;
     border-style:solid;
     border-width:1px;
-    color:white;
+    color:midnightblue;
     cursor:pointer;
     display:inline-block;
     font-size:1.167em;
@@ -43,7 +43,7 @@ textarea {
 
 .link-button 
 {
-    color: white;
+    color: midnightblue;
     border-color: #a1a7ae #909498 #6b7076;
     background: #9fa7b0 url(../images/old-browsers-bg/button-element-grey-bg.png) repeat-x top;
     background: -moz-linear-gradient(

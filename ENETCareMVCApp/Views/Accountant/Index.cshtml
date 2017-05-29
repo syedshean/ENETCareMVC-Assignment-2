@@ -15,8 +15,12 @@
     @Html.ActionLink("List of SiteEngineer & Manager", "Index", "Users", null, new { @class = "link-button" })
 </p>
 <p>
-    @Html.ActionLink("Run Report", "", "", null, new { @class = "link-button" })
+    @Html.ActionLink("Total Costs By Engineer", "TotalCostByEngineerReport", "Interventions", null, new { @class = "link-button" })
 </p>
+<p>
+    @Html.ActionLink("Average Costs By Engineer", "AverageCostByEngineerReport", "Interventions", null, new { @class = "link-button" })
+</p>
+
 <p>
     @Html.ActionLink("Change Password", "ChangePassword", "Manage", null, new { @class = "link-button" })
 </p>

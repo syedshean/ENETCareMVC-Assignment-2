@@ -26,9 +26,9 @@ namespace ENETCareMVCApp.Models
         [Required]
         public string UserType { set; get; }
 
-        public int MaxHour { set; get; }
+        public int? MaxHour { set; get; }
 
-        public int MaxCost { set; get; }
+        public int? MaxCost { set; get; }
 
         [Required]
         [Display(Name = "District")]
