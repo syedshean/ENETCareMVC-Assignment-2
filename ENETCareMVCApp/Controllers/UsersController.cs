@@ -94,8 +94,41 @@ namespace ENETCareMVCApp.Controllers
             return View(user);
         }
 
-        // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Users/ChangeDistrict/5
+        public ActionResult ChangeDistrict(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", user.DistrictID);
+            return View(user);
+        }
+
+        // POST: Users/ChangeDistrict/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeDistrict([Bind(Include = "UserID,UserName,LoginName,Email,UserType,MaxHour,MaxCost,DistrictID")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", user.DistrictID);
+            return View(user);
+        }
+
+            // GET: Users/Delete/5
+            public ActionResult Delete(int? id)
         {
             if (id == null)
             {

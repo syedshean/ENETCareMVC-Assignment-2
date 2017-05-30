@@ -12,7 +12,8 @@ namespace ENETCareMVCApp.Models
         [Required, Key]
         public int UserID { set; get; }
 
-        [Required]        
+        [Required]
+        [Display(Name = "User Name")]
         public string UserName { set; get; }
 
         [Required]
@@ -24,6 +25,7 @@ namespace ENETCareMVCApp.Models
         public string Email { set; get; }
 
         [Required]
+        [Display(Name = "Role")]
         public string UserType { set; get; }
 
         public int? MaxHour { set; get; }

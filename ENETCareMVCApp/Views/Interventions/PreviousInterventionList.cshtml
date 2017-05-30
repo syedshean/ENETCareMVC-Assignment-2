@@ -83,9 +83,9 @@
             @Html.DisplayFor(modelItem => item.ApproveUserID)
         </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.InterventionID }) |
+            @Html.ActionLink("Change Intervention State", "ChangeInterventionState", new { id=item.InterventionID }) @*|
             @Html.ActionLink("Details", "Details", new { id=item.InterventionID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.InterventionID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.InterventionID })*@
         </td>
     </tr>
 }

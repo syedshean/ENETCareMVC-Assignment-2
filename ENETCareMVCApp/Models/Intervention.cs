@@ -20,9 +20,11 @@ namespace ENETCareMVCApp.Models
         public int InterventionID { set; get; }
 
         [Required]
+        [Display(Name = "Labour Hour Required")]
         public float LabourRequired {get; set;}
 
         [Required]
+        [Display(Name = "Cost Required")]
         public float CostRequired {get; set;}
 
         
@@ -49,7 +51,7 @@ namespace ENETCareMVCApp.Models
         public virtual Client Client { get; set; }
 
         [Required]
-        [Display(Name = "User Name")]
+        [Display(Name = "SiteEngineer")]
         public int UserID { get; set; }
 
 
@@ -83,6 +85,11 @@ namespace ENETCareMVCApp.Models
                     yield return new ValidationResult("Notes has to be within 5000 words", new[] { "Notes" });
                 }
             }
+
+            //if (InterventionState == InterventionState.Completed)
+            //{
+            //    yield return new ValidationResult("INtervention is already Completed", new[] { "InterventionState" });
+            //}
         }
     }
 }

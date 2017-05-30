@@ -240,6 +240,10 @@
     <Content Include="App_Data\aspnet-ENETCareMVCApp-20170515112325_log.ldf">
       <DependentUpon>aspnet-ENETCareMVCApp-20170515112325.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Data\ENETCareMVCAppDatabase.mdf" />
+    <Content Include="App_Data\ENETCareMVCAppDatabase_log.ldf">
+      <DependentUpon>ENETCareMVCAppDatabase.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -325,6 +329,8 @@
     <Content Include="Views\Interventions\EditQMI.cshtml" />
     <Content Include="Views\Interventions\TotalCostByEngineerReport.cshtml" />
     <Content Include="Views\Interventions\AverageCostByEngineerReport.cshtml" />
+    <Content Include="Views\Users\ChangeDistrict.cshtml" />
+    <Content Include="Views\Interventions\ChangeInterventionState.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

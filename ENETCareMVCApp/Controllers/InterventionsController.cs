@@ -15,6 +15,7 @@ namespace ENETCareMVCApp.Controllers
     {
         private DBContext db = new DBContext();
 
+
         // GET: Interventions
         public ActionResult Index()
         {
@@ -24,7 +25,9 @@ namespace ENETCareMVCApp.Controllers
 
         public ActionResult ProposedInterventionList()
         {
-            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType).Include(i =>i.User).Where(i=>i.InterventionState==InterventionState.Proposed);
+            string logedUser = User.Identity.Name;
+            int districtID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().DistrictID;
+            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType).Include(i =>i.User).Where(i=>i.InterventionState==InterventionState.Proposed).Where(i=>i.Client.DistrictID==districtID);
             return View(interventions.ToList());
         }
 
@@ -115,16 +118,55 @@ namespace ENETCareMVCApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,InterventionTypeID")] Intervention intervention)
+        public ActionResult Edit([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,UserID,InterventionTypeID")] Intervention intervention)
+        {
+            if (ModelState.IsValid)
+            {                
+                db.Entry(intervention).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("PreviousInterventionList");
+            }
+            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
+            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
+            return View(intervention);
+        }
+
+        // GET: Interventions/Edit/5
+        public ActionResult ChangeInterventionState(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Intervention intervention = db.Interventions.Find(id);
+            if (intervention == null)
+            {
+                return HttpNotFound();
+            }
+            string logedUser = User.Identity.Name;
+            //int userID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
+            intervention.ApproveUserID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
+            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
+            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
+            return View(intervention);
+        }
+
+        // POST: Interventions/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeInterventionState([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,UserID,ApproveUserID,InterventionTypeID")] Intervention intervention)
         {
             if (ModelState.IsValid)
             {
-                db.Interventions.Attach(intervention);
-                db.Entry(intervention).Property(i => i.InterventionState).IsModified = true;
-                //db.Entry(intervention).State = EntityState.Modified;
+                db.Entry(intervention).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("PreviousInterventionList");
             }
+            string logedUser = User.Identity.Name;
+            //int userID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
+            intervention.ApproveUserID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
             ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
             ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
             return View(intervention);
