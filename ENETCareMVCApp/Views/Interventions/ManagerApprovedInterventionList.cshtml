@@ -1,22 +1,25 @@
 ﻿@model IEnumerable<ENETCareMVCApp.Models.Intervention>
 
 @{
-    ViewBag.Title = "ProposedInterventionList";
+    ViewBag.Title = "ManagerApprovedInterventionList";
 }
 
-<h2>ProposedInterventionList</h2>
+<h2>ManagerApprovedInterventionList</h2>
 
 @*<p>
     @Html.ActionLink("Create New", "Create")
 </p>*@
 <table class="table">
     <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.ApprovalUser.UserName)
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Client.ClientName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.InterventionType.InterventionTypeName)
-        </th>
+        </th>        
         <th>
             @Html.DisplayNameFor(model => model.LabourRequired)
         </th>
@@ -29,6 +32,9 @@
         <th>
             @Html.DisplayNameFor(model => model.InterventionState)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </th>
         @*<th>
             @Html.DisplayNameFor(model => model.Notes)
         </th>
@@ -37,11 +43,8 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LastEditDate)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.User.UserName)
         </th>
-        @*<th>
+        <th>
             @Html.DisplayNameFor(model => model.ApproveUserID)
         </th>*@
         <th></th>
@@ -49,12 +52,16 @@
 
 @foreach (var item in Model) {
     <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.ApprovalUser.UserName)
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Client.ClientName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.InterventionType.InterventionTypeName)
         </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.LabourRequired)
         </td>
@@ -67,6 +74,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.InterventionState)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.Notes)
         </td>
@@ -75,18 +85,15 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LastEditDate)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.User.UserName)
         </td>
-        @*<td>
+        <td>
             @Html.DisplayFor(modelItem => item.ApproveUserID)
         </td>*@
-        <td>
-            @Html.ActionLink("Change Intervention State", "ChangeInterventionState", new { id=item.InterventionID }) @*|
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.InterventionID }) |
             @Html.ActionLink("Details", "Details", new { id=item.InterventionID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.InterventionID })*@
-        </td>
+            @Html.ActionLink("Delete", "Delete", new { id=item.InterventionID })
+        </td>*@
     </tr>
 }
 

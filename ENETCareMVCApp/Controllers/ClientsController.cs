@@ -18,7 +18,9 @@ namespace ENETCareMVCApp.Controllers
         // GET: Clients
         public ActionResult Index()
         {
-            var clients = db.Clients.Include(c => c.District);
+            string logedUser = User.Identity.Name;
+            int districtID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().DistrictID;
+            var clients = db.Clients.Include(c => c.District).Where(i=>i.DistrictID==districtID);
             return View(clients.ToList());
         }
 

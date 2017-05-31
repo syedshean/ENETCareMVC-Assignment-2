@@ -219,6 +219,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClientWithInterventionModel.cs" />
+    <Compile Include="Models\CostByDistrict.cs" />
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -331,6 +332,7 @@
     <Content Include="Views\Interventions\AverageCostByEngineerReport.cshtml" />
     <Content Include="Views\Users\ChangeDistrict.cshtml" />
     <Content Include="Views\Interventions\ChangeInterventionState.cshtml" />
+    <Content Include="Views\Interventions\ManagerApprovedInterventionList.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
