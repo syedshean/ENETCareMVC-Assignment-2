@@ -333,6 +333,7 @@
     <Content Include="Views\Users\ChangeDistrict.cshtml" />
     <Content Include="Views\Interventions\ChangeInterventionState.cshtml" />
     <Content Include="Views\Interventions\ManagerApprovedInterventionList.cshtml" />
+    <Content Include="Views\Interventions\CostByDistrictReport.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
