@@ -12,5 +12,6 @@ namespace ENETCareMVCApp.Models
         public int InterventionID { get; set; }
         public string UserName { get; set; }
         public string InterventionTypeName { get; set; }
+        public string InterventionState { get; set; }
     }
 }

@@ -8,20 +8,24 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DistrictName)
+            District Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.aClient.ClientName)
+            Client Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.aClient.Address)
+            Address
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.InterventionTypeName)
+            Intervention Type Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            User Name
         </th>
+        <th>
+            Intervention State
+        </th>
+        <th></th>
         <th></th>
     </tr>
 
@@ -44,8 +48,13 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.InterventionState)
+            </td>
+            <td>
                 @Html.HiddenFor(modelItem => item.InterventionID)
             </td>
+
+
             <td>
                 @Html.ActionLink("Edit QMI", "EditQMI", "Interventions", new { id = item.InterventionID }, null) 
                    @* @Html.ActionLink("Details", "Details", new { id = item.aClient.ClientID }) |

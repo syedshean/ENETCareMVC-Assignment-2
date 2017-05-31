@@ -164,6 +164,7 @@ namespace ENETCareMVCApp.Controllers
                         aClientWithIntervention.aClient = client;
                         aClientWithIntervention.DistrictName = GetUserDistrict().DistrictName;
                         aClientWithIntervention.InterventionID = intervention.InterventionID;
+                        aClientWithIntervention.InterventionState = intervention.InterventionState.ToString();
                         aClientWithIntervention.InterventionTypeName = GetInterventionTypeByInterventionTypeID(intervention.InterventionTypeID).InterventionTypeName;
                         aClientWithIntervention.UserName = GetUserDetailsByUserID(intervention.UserID).UserName;
                         aClientWithInterventionList.Add(aClientWithIntervention);
