@@ -151,18 +151,7 @@ namespace ENETCareMVCApp.Controllers
             if (intervention == null)
             {
                 return HttpNotFound();
-            }
-            if (intervention.InterventionState == InterventionState.Completed)
-            {
-                ViewData["CompletedInterventionState"] = true;
-                //ViewBag.ChangeInterventionStateMessage = "Intervention is already completed";
-                ViewData["ChangeInterventionStateMessage"] = "Intervention is already completed";
-                return RedirectToAction("PreviousInterventionList");
-            }
-            else
-            {
-                ViewBag.CompletedInterventionState = false;
-            }
+            }            
             string logedUser = User.Identity.Name;
             //int userID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
             intervention.ApproveUserID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
