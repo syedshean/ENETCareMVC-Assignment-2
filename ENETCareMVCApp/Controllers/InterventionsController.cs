@@ -17,7 +17,7 @@ namespace ENETCareMVCApp.Controllers
 
 
         // GET: Interventions
-        public ActionResult Index()
+        public ActionResult Index()//Needs to edit check asngmt document Bus rules
         {
             var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType);
             return View("Index", interventions.ToList());
@@ -40,12 +40,12 @@ namespace ENETCareMVCApp.Controllers
             return View("ManagerApprovedInterventionList", interventions.ToList());
         }
 
-        public ActionResult PreviousInterventionList()
+        public ActionResult PreviousInterventionList()//Needs to edit check asngmt document Bus rules
         {
             string logedUser = User.Identity.Name;
             int userID = db.Users.Where(i=>i.LoginName==logedUser).FirstOrDefault().UserID;
             //int userID = Int32.Parse(GetUserIDByUserName(logedUser));
-            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType).Where(i=>i.UserID== userID);
+            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType).Where(i=>i.UserID== userID).Where(i=>i.InterventionState!= InterventionState.Cancelled);
             return View("PreviousInterventionList", interventions.ToList());
         }
 
@@ -332,9 +332,31 @@ namespace ENETCareMVCApp.Controllers
 
         public ActionResult CostByDistrictReport()
         {
-            //var costByDistrictList = db.Interventions.Include(i=>i.)
-
-            return View();
+            List<CostByDistrict> resultList = new List<CostByDistrict>();
+            List<District> aDistrictList = db.Districts.ToList();
+            foreach (var district in aDistrictList)
+            {
+                CostByDistrict result = db.Interventions
+                           .Where(i => i.InterventionState == InterventionState.Completed).Where(i => i.User.DistrictID == district.DistrictID)
+                           .GroupBy(i => i.User.DistrictID)
+                           .Select(set => new CostByDistrict
+                           {
+                               DistrictName = district.DistrictName,
+                               TotalCost = set.Sum(i => i.CostRequired).ToString(),
+                               TotalLabour = set.Sum(i => i.LabourRequired).ToString(),
+                               
+                           }).FirstOrDefault();
+                if (result == null)
+                {
+                    result = new CostByDistrict();
+                    result.DistrictName = district.DistrictName;
+                    result.TotalCost = "0";
+                    result.TotalLabour = "0";
+                    
+                }
+                resultList.Add(result);
+            }
+            return View(resultList);
         }
 
         protected override void Dispose(bool disposing)
