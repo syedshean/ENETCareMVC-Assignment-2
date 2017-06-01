@@ -334,6 +334,8 @@
     <Content Include="Views\Interventions\ChangeInterventionState.cshtml" />
     <Content Include="Views\Interventions\ManagerApprovedInterventionList.cshtml" />
     <Content Include="Views\Interventions\CostByDistrictReport.cshtml" />
+    <Content Include="Views\Interventions\DistrictListForMonthlyCost.cshtml" />
+    <Content Include="Views\Interventions\MonthlyCostsForDistrict.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

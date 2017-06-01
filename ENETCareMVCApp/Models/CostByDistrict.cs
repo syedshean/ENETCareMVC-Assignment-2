@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,7 @@ namespace ENETCareMVCApp.Models
 
         public string TotalLabour { get; set; }
 
+        [Display(Name ="Month")]
         public string Date { get; set; }
     }
 }

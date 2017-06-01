@@ -359,6 +359,43 @@ namespace ENETCareMVCApp.Controllers
             return View(resultList);
         }
 
+        public ActionResult DistrictListForMonthlyCost()
+        {
+            
+            return View(db.Districts.ToList());
+        }
+
+        public ActionResult MonthlyCostsForDistrict(int? id)
+        {
+            List<CostByDistrict> resultList = new List<CostByDistrict>();
+            int[] monthList = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+            
+            foreach (var month in monthList)
+            {
+                CostByDistrict result = db.Interventions.ToList()
+                           .Where(i => i.InterventionState == InterventionState.Completed).Where(i => i.User.DistrictID == id).Where(i => DateTime.Parse(i.InterventionDate, CultureInfo.CurrentCulture).Month == month)
+                           .GroupBy(i => i.InterventionDate)
+                           .Select(set => new CostByDistrict
+                           {                               
+                               TotalCost = set.Sum(i => i.CostRequired).ToString(),
+                               TotalLabour = set.Sum(i => i.LabourRequired).ToString(),
+                               Date = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName (month),
+                               
+
+                           }).FirstOrDefault();
+                if (result == null)
+                {
+                    result = new CostByDistrict();                    
+                    result.Date = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
+                    result.TotalCost = "0";
+                    result.TotalLabour = "0";
+
+                }
+                resultList.Add(result);
+            }
+            return View(resultList);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

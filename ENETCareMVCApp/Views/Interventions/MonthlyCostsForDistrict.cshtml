@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ENETCareMVCApp.Models.CostByDistrict>
+
+@{
+    ViewBag.Title = "MonthlyCostsForDistrict";
+}
+
+<h2>MonthlyCostsForDistrict</h2>
+
+
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalLabour)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalCost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalLabour)
+        </td>
+        
+        
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Back to District list", "DistrictListForMonthlyCost")
+</div>
