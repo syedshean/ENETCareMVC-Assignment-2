@@ -6,7 +6,10 @@
 
 <h2>CostByDistrictReport</h2>
 
-
+@{
+    float TotalCost = 0;
+    float TotalLabourHour = 0;
+}
 <table class="table">
     <tr>
         <th>
@@ -33,6 +36,11 @@
             @Html.DisplayFor(modelItem => item.TotalLabour)
         </td>          
     </tr>
-}
+    TotalCost = TotalCost + float.Parse(item.TotalCost);
+    TotalLabourHour = TotalLabourHour + float.Parse(item.TotalLabour);
+}  
 
 </table>
+
+<p><b>Total Cost:$</b> @TotalCost</p>
+<p><b>Total Labour Hour:</b> @TotalLabourHour</p>
