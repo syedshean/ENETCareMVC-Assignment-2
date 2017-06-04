@@ -8,12 +8,25 @@ using System.Web;
 using System.Web.Mvc;
 using ENETCareMVCApp.Models;
 using Microsoft.AspNet.Identity;
+using ENETCareMVCApp.Repositories;
 
 namespace ENETCareMVCApp.Controllers
 {
     public class ClientsController : Controller
     {
         private DBContext db = new DBContext();
+        IRepository repository;
+
+        public ClientsController()
+        {
+            db = new DBContext();
+            repository = new Repository();
+        }
+
+        public ClientsController(IRepository repository)
+        {
+            this.repository = repository;
+        }
 
         // GET: Clients
         public ActionResult Index()
@@ -63,9 +76,8 @@ namespace ENETCareMVCApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Clients.Add(client);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                Client aClient = repository.AddClients(client);
+                return RedirectToAction("Index", new { id = aClient.ClientID });
             }
             // If insert fails
             District userDistrict = GetUserDistrict();
