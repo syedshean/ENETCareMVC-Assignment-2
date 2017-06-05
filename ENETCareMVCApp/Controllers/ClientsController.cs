@@ -51,8 +51,8 @@ namespace ENETCareMVCApp.Controllers
             }
             return View(client);
         }
-
-        // GET: Clients/Create
+        
+        [Authorize(Roles = "SiteEngineer")]
         public ActionResult Create()
         {
             District userDistrict = GetUserDistrict();
@@ -62,16 +62,11 @@ namespace ENETCareMVCApp.Controllers
                 DistrictID = userDistrict.DistrictID,
             };
             return View(aClientModel);
-
-            //ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName");
-            //return View();
         }
 
-        // POST: Clients/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SiteEngineer")]
         public ActionResult Create([Bind(Include = "ClientID,ClientName,Address,DistrictID")] Client client)
         {
             if (ModelState.IsValid)
