@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ENETCareMVCApp.Models;
 using System.Globalization;
+using System.Net.Mail;
 
 namespace ENETCareMVCApp.Controllers
 {
@@ -169,9 +170,36 @@ namespace ENETCareMVCApp.Controllers
         {
             string logedUser = User.Identity.Name;
             string userType = db.Users.Where(i => i.LoginName== logedUser).FirstOrDefault().UserType;
+
             if (ModelState.IsValid)
             {
                 db.Entry(intervention).State = EntityState.Modified;
+
+                string emailAddr = db.Users.Where(i => i.UserID == intervention.UserID).FirstOrDefault().Email;
+
+                try
+                {
+                    MailMessage mailMessage = new MailMessage();
+
+                    mailMessage.To.Add(emailAddr);
+                    mailMessage.From = new MailAddress("csysyzdlm2@gmail.com");
+                    mailMessage.Subject = "Intervention state updated";
+                    mailMessage.Body = "Hello your Intervention state was just updated";
+
+                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+                    smtpClient.EnableSsl = true;
+                    NetworkCredential NetworkCred = new NetworkCredential("csysyzdlm2@gmail.com", "csysyzdlm");
+                    smtpClient.UseDefaultCredentials = true;
+                    smtpClient.Credentials = NetworkCred;
+                    smtpClient.Port = 587;
+                    smtpClient.Send(mailMessage);
+
+                }
+                catch (Exception ex)
+                {
+                    throw (ex);
+                }
+
                 db.SaveChanges();
                 if (userType == "Manager")
                 {
@@ -433,4 +461,5 @@ namespace ENETCareMVCApp.Controllers
             return districtID;
         }
     }
+    
 }

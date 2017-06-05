@@ -240,10 +240,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\aspnet-ENETCareMVCApp-20170515112325.mdf" />
-    <Content Include="App_Data\aspnet-ENETCareMVCApp-20170515112325_log.ldf">
-      <DependentUpon>aspnet-ENETCareMVCApp-20170515112325.mdf</DependentUpon>
-    </Content>
+    <Content Include="App_Data\aspnet-ENETCareMVCApp-20170515112325_log.ldf" />
     <Content Include="App_Data\ENETCareMVCAppDatabase.mdf" />
+    <Content Include="App_Data\ENETCareMVCAppDatabase_log %281%29.ldf" />
     <Content Include="App_Data\ENETCareMVCAppDatabase_log.ldf">
       <DependentUpon>ENETCareMVCAppDatabase.mdf</DependentUpon>
     </Content>
