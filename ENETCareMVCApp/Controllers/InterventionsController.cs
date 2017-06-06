@@ -174,33 +174,37 @@ namespace ENETCareMVCApp.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(intervention).State = EntityState.Modified;
-
-                string emailAddr = db.Users.Where(i => i.UserID == intervention.UserID).FirstOrDefault().Email;
-
-                try
-                {
-                    MailMessage mailMessage = new MailMessage();
-
-                    mailMessage.To.Add(emailAddr);
-                    mailMessage.From = new MailAddress("csysyzdlm2@gmail.com");
-                    mailMessage.Subject = "Intervention state updated";
-                    mailMessage.Body = "Hello your Intervention state was just updated";
-
-                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
-                    smtpClient.EnableSsl = true;
-                    NetworkCredential NetworkCred = new NetworkCredential("csysyzdlm2@gmail.com", "csysyzdlm");
-                    smtpClient.UseDefaultCredentials = true;
-                    smtpClient.Credentials = NetworkCred;
-                    smtpClient.Port = 587;
-                    smtpClient.Send(mailMessage);
-
-                }
-                catch (Exception ex)
-                {
-                    throw (ex);
-                }
-
                 db.SaveChanges();
+
+                // Email sent 
+                if (userType == "Manager")
+                {
+                    string emailAddr = db.Users.Where(i => i.UserID == intervention.UserID).FirstOrDefault().Email;
+
+                    try
+                    {
+                        MailMessage mailMessage = new MailMessage();
+
+                        mailMessage.To.Add(emailAddr);
+                        mailMessage.From = new MailAddress("ENETCare.UltimoCoder@gmail.com");
+                        mailMessage.Subject = "Intervention state updated";
+                        mailMessage.Body = "Hello your Intervention state was just updated. The status of your intervention is now "+ intervention.InterventionState.ToString(); //\"" + intervention.InterventionType.InterventionTypeName +"\" for client "+ intervention.Client.ClientName +"
+
+                        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+                        smtpClient.EnableSsl = true;
+                        NetworkCredential NetworkCred = new NetworkCredential("ENETCare.UltimoCoder@gmail.com", "Aa!12345678");
+                        smtpClient.UseDefaultCredentials = false;
+                        smtpClient.Credentials = NetworkCred;
+                        smtpClient.Port = 587;
+                        smtpClient.Send(mailMessage);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw (ex);
+                    }
+                }
+
                 if (userType == "Manager")
                 {
                     return RedirectToAction("ProposedInterventionList");
