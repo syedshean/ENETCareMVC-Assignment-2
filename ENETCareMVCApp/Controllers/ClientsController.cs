@@ -69,7 +69,8 @@ namespace ENETCareMVCApp.Controllers
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult Create([Bind(Include = "ClientID,ClientName,Address,DistrictID")] Client client)
         {
-            if (ModelState.IsValid)
+            bool isExist = IsUserNameExits(client.ClientName);
+            if (ModelState.IsValid && (isExist==false))
             {
                 Client aClient = repository.AddClients(client);
                 return RedirectToAction("Index", new { id = aClient.ClientID });
@@ -78,8 +79,24 @@ namespace ENETCareMVCApp.Controllers
             District userDistrict = GetUserDistrict();
             client.DistrictID = userDistrict.DistrictID;
             client.District = userDistrict;
+            if (isExist == true)
+                ViewBag.Message = "This client already existes";
+            else
+                ViewBag.Message = "";
             //ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
             return View(client);
+        }
+
+        private bool IsUserNameExits(string clientName)
+        {
+            Client client;
+            using (var db = new DBContext())
+            {
+                client = db.Clients.Where(i => i.ClientName == clientName).FirstOrDefault();  
+            }
+            if (client == null)
+                return false;
+            else return true;
         }
 
         // GET: Clients/Edit/5
