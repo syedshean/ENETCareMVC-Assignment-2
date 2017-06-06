@@ -15,5 +15,17 @@ namespace ENETCareMVCApp.Repositories
             db.SaveChanges();
             return aClient;
         }
+
+        public bool IsUserNameExits(string clientName)
+        {
+            Client client;
+            using (var db = new DBContext())
+            {
+                client = db.Clients.Where(i => i.ClientName == clientName).FirstOrDefault();
+            }
+            if (client == null)
+                return false;
+            else return true;
+        }
     }
 }

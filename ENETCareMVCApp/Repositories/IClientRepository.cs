@@ -9,5 +9,6 @@ namespace ENETCareMVCApp.Repositories
     public interface IClientRepository
     {
         Client AddClients(Client aClient);
+        bool IsUserNameExits(string clientName);
     }
 }

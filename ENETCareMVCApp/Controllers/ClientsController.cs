@@ -69,7 +69,7 @@ namespace ENETCareMVCApp.Controllers
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult Create([Bind(Include = "ClientID,ClientName,Address,DistrictID")] Client client)
         {
-            bool isExist = IsUserNameExits(client.ClientName);
+            bool isExist = repository.IsUserNameExits(client.ClientName);
             if (ModelState.IsValid && (isExist==false))
             {
                 Client aClient = repository.AddClients(client);
@@ -87,18 +87,18 @@ namespace ENETCareMVCApp.Controllers
             return View(client);
         }
 
-        [NonAction]
-        private bool IsUserNameExits(string clientName)
-        {
-            Client client;
-            using (var db = new DBContext())
-            {
-                client = db.Clients.Where(i => i.ClientName == clientName).FirstOrDefault();  
-            }
-            if (client == null)
-                return false;
-            else return true;
-        }
+        //[NonAction]
+        //private bool IsUserNameExits(string clientName)
+        //{
+        //    Client client;
+        //    using (var db = new DBContext())
+        //    {
+        //        client = db.Clients.Where(i => i.ClientName == clientName).FirstOrDefault();  
+        //    }
+        //    if (client == null)
+        //        return false;
+        //    else return true;
+        //}
 
         // GET: Clients/Edit/5
         //public ActionResult Edit(int? id)
