@@ -36,21 +36,6 @@ namespace ENETCareMVCApp.Controllers
             var clients = db.Clients.Include(c => c.District).Where(i=>i.DistrictID==districtID);
             return View(clients.ToList());
         }
-
-        //// GET: Clients/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Client client = db.Clients.Find(id);
-        //    if (client == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(client);
-        //}
         
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult Create()
@@ -83,81 +68,8 @@ namespace ENETCareMVCApp.Controllers
                 ViewBag.Message = "This client already existes";
             else
                 ViewBag.Message = "";
-            //ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
             return View(client);
         }
-
-        //[NonAction]
-        //private bool IsUserNameExits(string clientName)
-        //{
-        //    Client client;
-        //    using (var db = new DBContext())
-        //    {
-        //        client = db.Clients.Where(i => i.ClientName == clientName).FirstOrDefault();  
-        //    }
-        //    if (client == null)
-        //        return false;
-        //    else return true;
-        //}
-
-        // GET: Clients/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Client client = db.Clients.Find(id);
-        //    if (client == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
-        //    return View(client);
-        //}
-
-        // POST: Clients/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "ClientID,ClientName,Address,DistrictID")] Client client)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(client).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
-        //    return View(client);
-        //}
-
-        // GET: Clients/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Client client = db.Clients.Find(id);
-        //    if (client == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(client);
-        //}
-
-        // POST: Clients/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Client client = db.Clients.Find(id);
-        //    db.Clients.Remove(client);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
 
         [Authorize(Roles = "SiteEngineer")]
         // ClientList with Interventions
@@ -207,15 +119,15 @@ namespace ENETCareMVCApp.Controllers
         [NonAction]
         public List<Client> GetClientListByDistrict(int districtID)
         {
-            List<Client> aClientList = new List<Client>();
-            using (var db = new DBContext())
-            {
-                aClientList = (from c in db.Clients
-                               where c.District.DistrictID == districtID
-                               select c).ToList();
+            //List<Client> aClientList = new List<Client>();
+            //using (var db = new DBContext())
+            //{
+            //    aClientList = (from c in db.Clients
+            //                   where c.District.DistrictID == districtID
+            //                   select c).ToList();
 
-            }
-            return aClientList;
+            //}
+            return repository.GetClientListByDistrict(districtID);
         }
 
         [NonAction]

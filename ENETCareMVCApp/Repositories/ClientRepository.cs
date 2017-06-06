@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity;
 
 namespace ENETCareMVCApp.Repositories
 {
@@ -26,6 +27,19 @@ namespace ENETCareMVCApp.Repositories
             if (client == null)
                 return false;
             else return true;
+        }
+
+        public List<Client> GetClientListByDistrict(int districtID)
+        {
+            List<Client> aClientList = new List<Client>();
+            using (var db = new DBContext())
+            {
+                aClientList = (from c in db.Clients
+                               where c.District.DistrictID == districtID
+                               select c).ToList();
+
+            }
+            return aClientList;
         }
     }
 }
