@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ENETCareMVCApp.Repositories
 {
-    public class Repository : IRepository
+    public class ClientRepository : IClientRepository
     {
         private DBContext db = new DBContext();
         public Client AddClients(Client aClient)

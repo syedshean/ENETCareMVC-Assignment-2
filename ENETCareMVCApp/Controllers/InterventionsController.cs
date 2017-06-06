@@ -18,11 +18,12 @@ namespace ENETCareMVCApp.Controllers
 
 
         // GET: Interventions
-        //public ActionResult Index()//Needs to edit check asngmt document Bus rules
-        //{
-        //    var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType);
-        //    return View("Index", interventions.ToList());
-        //}
+        [Authorize(Roles = "SiteEngineer")]
+        public ActionResult Index()//Needs to edit check asngmt document Bus rules
+        {
+            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType);
+            return View("Index", interventions.ToList());
+        }
 
         [Authorize(Roles = "Manager")]
         public ActionResult ProposedInterventionList()

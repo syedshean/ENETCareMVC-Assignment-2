@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ENETCareMVCApp.Repositories
 {
-    public interface IRepository
+    public interface IClientRepository
     {
         Client AddClients(Client aClient);
     }

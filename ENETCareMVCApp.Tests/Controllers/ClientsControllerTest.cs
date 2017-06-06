@@ -14,7 +14,7 @@ namespace ENETCareMVCApp.Tests.Controllers
         [TestMethod]
         public void CreateClient_PostOk()
         {
-            Mock<IRepository> service = new Mock<IRepository>();
+            Mock<IClientRepository> service = new Mock<IClientRepository>();
             service.Setup(x => x.AddClients(It.IsAny<Client>())).Returns<Client>(e => { e.ClientID = 100; return e; });
             var controller = new ClientsController(service.Object);
             Client formData = new Client

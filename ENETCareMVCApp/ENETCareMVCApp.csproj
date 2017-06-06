@@ -201,7 +201,6 @@
     <Compile Include="Controllers\InterventionsController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\SiteEngineerController.cs" />
-    <Compile Include="Controllers\DistrictController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -234,8 +233,8 @@
     <Compile Include="Models\SiteEngineerTotalCost.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\IClientRepository.cs" />
+    <Compile Include="Repositories\ClientRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -300,11 +299,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\District\Create.cshtml" />
-    <Content Include="Views\District\Delete.cshtml" />
-    <Content Include="Views\District\Details.cshtml" />
-    <Content Include="Views\District\Edit.cshtml" />
-    <Content Include="Views\District\Index.cshtml" />
     <Content Include="Views\SiteEngineer\Index.cshtml" />
     <Content Include="Views\Clients\Create.cshtml" />
     <Content Include="Views\Clients\Delete.cshtml" />

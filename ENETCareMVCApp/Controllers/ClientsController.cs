@@ -15,15 +15,15 @@ namespace ENETCareMVCApp.Controllers
     public class ClientsController : Controller
     {
         private DBContext db = new DBContext();
-        IRepository repository;
+        IClientRepository repository;
 
         public ClientsController()
         {
             db = new DBContext();
-            repository = new Repository();
+            repository = new ClientRepository();
         }
 
-        public ClientsController(IRepository repository)
+        public ClientsController(IClientRepository repository)
         {
             this.repository = repository;
         }
