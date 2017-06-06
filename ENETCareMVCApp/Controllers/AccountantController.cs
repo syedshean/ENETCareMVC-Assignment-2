@@ -8,7 +8,7 @@ namespace ENETCareMVCApp.Controllers
 {
     public class AccountantController : Controller
     {
-        // GET: Accountant
+        [Authorize(Roles = "Accountant")]
         public ActionResult Index(String message)
         {
             ViewBag.StatusMessage = message;

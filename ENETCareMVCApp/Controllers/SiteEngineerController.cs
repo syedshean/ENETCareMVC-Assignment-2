@@ -9,7 +9,7 @@ namespace ENETCareMVCApp.Controllers
 {
     public class SiteEngineerController : Controller
     {
-        // GET: Default
+        [Authorize(Roles = "SiteEngineer")]
         public ActionResult Index(String message)
         {
             ViewBag.StatusMessage = message;

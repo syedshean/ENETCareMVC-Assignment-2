@@ -18,12 +18,13 @@ namespace ENETCareMVCApp.Controllers
 
 
         // GET: Interventions
-        public ActionResult Index()//Needs to edit check asngmt document Bus rules
-        {
-            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType);
-            return View("Index", interventions.ToList());
-        }
+        //public ActionResult Index()//Needs to edit check asngmt document Bus rules
+        //{
+        //    var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType);
+        //    return View("Index", interventions.ToList());
+        //}
 
+        [Authorize(Roles = "Manager")]
         public ActionResult ProposedInterventionList()
         {
             string logedUser = User.Identity.Name;
@@ -32,6 +33,7 @@ namespace ENETCareMVCApp.Controllers
             return View("ProposedInterventionList", interventions.ToList());
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult ManagerApprovedInterventionList()
         {
             string logedUser = User.Identity.Name;
@@ -41,6 +43,7 @@ namespace ENETCareMVCApp.Controllers
             return View("ManagerApprovedInterventionList", interventions.ToList());
         }
 
+        [Authorize(Roles = "SiteEngineer")]
         public ActionResult PreviousInterventionList()//Needs to edit check asngmt document Bus rules
         {
             string logedUser = User.Identity.Name;
@@ -51,21 +54,22 @@ namespace ENETCareMVCApp.Controllers
         }
 
         // GET: Interventions/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Intervention intervention = db.Interventions.Find(id);
-            if (intervention == null)
-            {
-                return HttpNotFound();
-            }
-            return View(intervention);
-        }
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Intervention intervention = db.Interventions.Find(id);
+        //    if (intervention == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(intervention);
+        //}
 
         // GET: Interventions/Create
+        [Authorize(Roles = "SiteEngineer")]
         public ActionResult Create()
         {
             string logedUser = User.Identity.Name;
@@ -107,41 +111,41 @@ namespace ENETCareMVCApp.Controllers
         }
 
         // GET: Interventions/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Intervention intervention = db.Interventions.Find(id);
-            if (intervention == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
-            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
-            return View(intervention);
-        }
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Intervention intervention = db.Interventions.Find(id);
+        //    if (intervention == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
+        //    ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
+        //    return View(intervention);
+        //}
 
-        // POST: Interventions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,UserID,InterventionTypeID")] Intervention intervention)
-        {
-            if (ModelState.IsValid)
-            {                
-                db.Entry(intervention).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("PreviousInterventionList");
-            }
-            ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
-            ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
-            return View(intervention);
-        }
+        //// POST: Interventions/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,UserID,InterventionTypeID")] Intervention intervention)
+        //{
+        //    if (ModelState.IsValid)
+        //    {                
+        //        db.Entry(intervention).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("PreviousInterventionList");
+        //    }
+        //    ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
+        //    ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
+        //    return View(intervention);
+        //}
 
-        // GET: Interventions/Edit/5
+        [Authorize(Roles = "SiteEngineer, Manager")]
         public ActionResult ChangeInterventionState(int? id)
         {
             if (id == null)
@@ -223,32 +227,33 @@ namespace ENETCareMVCApp.Controllers
             return View(intervention);
         }
 
-        // GET: Interventions/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Intervention intervention = db.Interventions.Find(id);
-            if (intervention == null)
-            {
-                return HttpNotFound();
-            }
-            return View(intervention);
-        }
+        //// GET: Interventions/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Intervention intervention = db.Interventions.Find(id);
+        //    if (intervention == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(intervention);
+        //}
 
-        // POST: Interventions/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Intervention intervention = db.Interventions.Find(id);
-            db.Interventions.Remove(intervention);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //// POST: Interventions/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Intervention intervention = db.Interventions.Find(id);
+        //    db.Interventions.Remove(intervention);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
+        [Authorize(Roles = "SiteEngineer")]
         public ActionResult EditQMI(int? id)
         {
             if (id == null)
@@ -304,6 +309,7 @@ namespace ENETCareMVCApp.Controllers
             return View(anIntervention);
         }
 
+        [Authorize(Roles = "Accountant")]
         public ActionResult TotalCostByEngineerReport()
         {
             List<SiteEngineerTotalCost> resultList = new List<SiteEngineerTotalCost>();
@@ -333,6 +339,7 @@ namespace ENETCareMVCApp.Controllers
             return View(resultList);
         }
 
+        [Authorize(Roles = "Accountant")]
         public ActionResult AverageCostByEngineerReport()
         {
             List<SiteEngineerTotalCost> resultList = new List<SiteEngineerTotalCost>();
@@ -362,6 +369,7 @@ namespace ENETCareMVCApp.Controllers
             return View(resultList);
         }
 
+        [Authorize(Roles = "Accountant")]
         public ActionResult CostByDistrictReport()
         {
             List<CostByDistrict> resultList = new List<CostByDistrict>();
@@ -391,12 +399,14 @@ namespace ENETCareMVCApp.Controllers
             return View(resultList);
         }
 
+        [Authorize(Roles = "Accountant")]
         public ActionResult DistrictListForMonthlyCost()
         {
             
             return View(db.Districts.ToList());
         }
 
+        [Authorize(Roles = "Accountant")]
         public ActionResult MonthlyCostsForDistrict(int? id)
         {
             List<CostByDistrict> resultList = new List<CostByDistrict>();
@@ -428,15 +438,6 @@ namespace ENETCareMVCApp.Controllers
             return View(resultList);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         [NonAction]
         public string GetUserIDByUserName(string userName)
         {
@@ -463,6 +464,15 @@ namespace ENETCareMVCApp.Controllers
 
             }
             return districtID;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
     

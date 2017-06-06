@@ -28,7 +28,7 @@ namespace ENETCareMVCApp.Controllers
             this.repository = repository;
         }
 
-        // GET: Clients
+        [Authorize(Roles = "SiteEngineer")]
         public ActionResult Index()
         {
             string logedUser = User.Identity.Name;
@@ -37,20 +37,20 @@ namespace ENETCareMVCApp.Controllers
             return View(clients.ToList());
         }
 
-        // GET: Clients/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Client client = db.Clients.Find(id);
-            if (client == null)
-            {
-                return HttpNotFound();
-            }
-            return View(client);
-        }
+        //// GET: Clients/Details/5
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Client client = db.Clients.Find(id);
+        //    if (client == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(client);
+        //}
         
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult Create()
@@ -87,6 +87,7 @@ namespace ENETCareMVCApp.Controllers
             return View(client);
         }
 
+        [NonAction]
         private bool IsUserNameExits(string clientName)
         {
             Client client;
@@ -100,74 +101,65 @@ namespace ENETCareMVCApp.Controllers
         }
 
         // GET: Clients/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Client client = db.Clients.Find(id);
-            if (client == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
-            return View(client);
-        }
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Client client = db.Clients.Find(id);
+        //    if (client == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
+        //    return View(client);
+        //}
 
         // POST: Clients/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClientID,ClientName,Address,DistrictID")] Client client)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(client).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
-            return View(client);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "ClientID,ClientName,Address,DistrictID")] Client client)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(client).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.DistrictID = new SelectList(db.Districts, "DistrictID", "DistrictName", client.DistrictID);
+        //    return View(client);
+        //}
 
         // GET: Clients/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Client client = db.Clients.Find(id);
-            if (client == null)
-            {
-                return HttpNotFound();
-            }
-            return View(client);
-        }
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Client client = db.Clients.Find(id);
+        //    if (client == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(client);
+        //}
 
         // POST: Clients/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Client client = db.Clients.Find(id);
-            db.Clients.Remove(client);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Client client = db.Clients.Find(id);
+        //    db.Clients.Remove(client);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-
+        [Authorize(Roles = "SiteEngineer")]
         // ClientList with Interventions
         public ActionResult ClientListWithIntervention()
         {
@@ -199,6 +191,7 @@ namespace ENETCareMVCApp.Controllers
         }
 
         //Returns the district of logged in user 
+        [NonAction]
         private District GetUserDistrict()
         {
             string logedUser = User.Identity.Name;
@@ -278,31 +271,14 @@ namespace ENETCareMVCApp.Controllers
             }
             return anUser;
         }
-        //[NonAction]
-        //public bool IsUserNameExist(string clientName)
-        //{
-        //    bool isExist = false;
-        //    connectionString = aDatabaseConfig.Setup("ENETCareDatabase");
-        //    using (SqlConnection connection = new SqlConnection())
-        //    {
-        //        connection.ConnectionString = connectionString;
-        //        string query = "SELECT * FROM Client WHERE ClientName=@clientName";
 
-        //        SqlCommand command = new SqlCommand(query, connection);
-        //        command.Parameters.Add(new SqlParameter("clientName", clientName));
-
-        //        try
-        //        {
-        //            connection.Open();
-        //            SqlDataReader reader = command.ExecuteReader();
-        //            while (reader.Read())
-        //            {
-        //                isExist = true;
-        //            }
-        //        }
-        //        catch { }
-        //    }
-        //    return isExist;
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
