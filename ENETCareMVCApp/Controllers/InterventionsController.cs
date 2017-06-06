@@ -21,7 +21,9 @@ namespace ENETCareMVCApp.Controllers
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult Index()//Needs to edit check asngmt document Bus rules
         {
-            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType);
+            string logedUser = User.Identity.Name;
+            int userID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
+            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType).Where(i => i.UserID == userID).Where(i => i.InterventionState != InterventionState.Cancelled);
             return View("Index", interventions.ToList());
         }
 
@@ -49,8 +51,9 @@ namespace ENETCareMVCApp.Controllers
         {
             string logedUser = User.Identity.Name;
             int userID = db.Users.Where(i=>i.LoginName==logedUser).FirstOrDefault().UserID;
-            //int userID = Int32.Parse(GetUserIDByUserName(logedUser));
-            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType).Where(i=>i.UserID== userID).Where(i=>i.InterventionState!= InterventionState.Cancelled);
+            var MaxSiteEngineerCost = db.Users.Where(u => u.LoginName == logedUser).FirstOrDefault().MaxCost;
+            var MaxSiteEngineerHour = db.Users.Where(u => u.LoginName == logedUser).FirstOrDefault().MaxHour;
+            var interventions = db.Interventions.Include(i => i.Client).Include(i => i.InterventionType).Where(i=>i.UserID== userID).Where(i=>i.InterventionState!= InterventionState.Cancelled).Where(i => i.CostRequired <= MaxSiteEngineerCost).Where(i => i.LabourRequired <= MaxSiteEngineerHour);
             return View("PreviousInterventionList", interventions.ToList());
         }
 
@@ -73,6 +76,7 @@ namespace ENETCareMVCApp.Controllers
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult Create()
         {
+            ViewBag.SiteEngineerOutofLimit = false;
             string logedUser = User.Identity.Name;
             User currentUser = (db.Users.Where(u => u.LoginName == logedUser)).First();
             Intervention aInterventionModel = new Intervention
@@ -94,13 +98,27 @@ namespace ENETCareMVCApp.Controllers
         public ActionResult Create([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,UserID,InterventionTypeID")] Intervention intervention)
         {
             intervention.RemainingLife = 100;
+            string logedUser = User.Identity.Name;
+            var MaxSiteEngineerCost = db.Users.Where(u => u.LoginName == logedUser).FirstOrDefault().MaxCost;
+            var MaxSiteEngineerHour = db.Users.Where(u => u.LoginName == logedUser).FirstOrDefault().MaxHour;
+            ViewBag.SiteEngineerOutofLimit = false;
+
             if (ModelState.IsValid)
             {
-                db.Interventions.Add(intervention);
-                db.SaveChanges();
-                return RedirectToAction("PreviousInterventionList");
+                if (((intervention.CostRequired > MaxSiteEngineerCost) || (intervention.LabourRequired > MaxSiteEngineerHour)) && (intervention.InterventionState != InterventionState.Proposed))
+                {
+                    ViewBag.SiteEngineerOutofLimit = true;
+                    ViewBag.SiteEngineerOutofLimitMessage = "Sorry this intervention is out of your limit. You must propose this intervention";
+
+                }
+                else
+                {
+                    db.Interventions.Add(intervention);
+                    db.SaveChanges();
+                    return RedirectToAction("PreviousInterventionList");
+                }
             }
-            string logedUser = User.Identity.Name;
+            
             User currentUser = (db.Users.Where(u => u.LoginName == logedUser)).First();
             intervention.UserID = currentUser.UserID;
             intervention.User = currentUser;
@@ -157,9 +175,56 @@ namespace ENETCareMVCApp.Controllers
             if (intervention == null)
             {
                 return HttpNotFound();
-            }            
+            } 
+            
             string logedUser = User.Identity.Name;
-            //int userID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
+            string userType = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserType;
+            var changeInterventionState = InterventionState.Cancelled;
+            if (userType == "SiteEngineer")
+            {
+                ViewBag.SiteEngineerInterventionState = true;
+                if(intervention.InterventionState == InterventionState.Proposed)
+                {
+                    changeInterventionState = InterventionState.Proposed;
+                }
+                else if (intervention.InterventionState == InterventionState.Approved)
+                {
+                    changeInterventionState = InterventionState.Approved;
+                }
+            }
+            else
+            {
+                ViewBag.SiteEngineerInterventionState = false;
+            }
+            var SiteEngineerSelectList = Enum.GetValues(typeof(InterventionState))
+                       .Cast<InterventionState>()
+                       .Where(e => e > changeInterventionState)
+                       .Select(e => new SelectListItem
+                       {
+                           Value = ((int)e).ToString(),
+                           Text = e.ToString()
+                       });
+            ViewBag.SiteEngineerInterventionStateList = SiteEngineerSelectList;
+
+            if (userType == "Manager")
+            {
+                ViewBag.ManagerApproveState = true;                
+            }
+            else
+            {
+                ViewBag.ManagerApproveState = false;
+            }
+
+            var managerSelectList = Enum.GetValues(typeof(InterventionState))
+                        .Cast<InterventionState>()
+                        .Where(e => e != InterventionState.Proposed).Where(e => e != InterventionState.Completed)
+                        .Select(e => new SelectListItem
+                        {
+                            Value = ((int)e).ToString(),
+                            Text = e.ToString()
+                        });
+            ViewBag.ManagerInterventionStateList = managerSelectList;
+
             intervention.ApproveUserID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
             ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
             ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
@@ -188,6 +253,7 @@ namespace ENETCareMVCApp.Controllers
 
                     try
                     {
+                        
                         MailMessage mailMessage = new MailMessage();
 
                         mailMessage.To.Add(emailAddr);

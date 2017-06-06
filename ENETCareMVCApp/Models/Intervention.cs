@@ -21,10 +21,12 @@ namespace ENETCareMVCApp.Models
 
         [Required]
         [Display(Name = "Labour Hour Required")]
+        [Range(1, 720, ErrorMessage = "You entered an unreasonable Labour Hour for Intervention")]
         public float LabourRequired {get; set;}
 
         [Required]
         [Display(Name = "Cost Required")]
+        [Range(1, 200000, ErrorMessage = "You entered an unreasonable Cost for Intervention")]
         public float CostRequired {get; set;}
 
         
@@ -84,12 +86,8 @@ namespace ENETCareMVCApp.Models
                 {
                     yield return new ValidationResult("Notes has to be within 5000 words", new[] { "Notes" });
                 }
-            }
-
-            //if (InterventionState == InterventionState.Completed)
-            //{
-            //    yield return new ValidationResult("INtervention is already Completed", new[] { "InterventionState" });
-            //}
+            }         
+  
         }
     }
 }
