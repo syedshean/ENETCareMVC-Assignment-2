@@ -407,7 +407,6 @@ namespace ENETCareMVCApp.Controllers
                 userID = (from u in db.Users
                           where u.LoginName == userName
                           select u.UserID).FirstOrDefault().ToString();
-
             }
             return userID;
         }
