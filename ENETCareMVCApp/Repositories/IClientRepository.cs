@@ -11,5 +11,8 @@ namespace ENETCareMVCApp.Repositories
         Client AddClients(Client aClient);
         bool IsUserNameExits(string clientName);
         List<Client> GetClientListByDistrict(int districtID);
+        InterventionType GetInterventionTypeByInterventionTypeID(int interventionTypeID);
+        List<Intervention> GetInterventionList();
+        User GetUserDetails(int userID);
     }
 }

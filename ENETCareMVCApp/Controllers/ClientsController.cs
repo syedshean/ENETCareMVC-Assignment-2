@@ -80,7 +80,7 @@ namespace ENETCareMVCApp.Controllers
             List<ClientWithInterventionModel> aClientWithInterventionList = new List<ClientWithInterventionModel>();
             using (var db = new DBContext())
             {
-                interventions = db.Interventions.Where(i => i.InterventionState != InterventionState.Cancelled).ToList();
+                interventions = repository.GetInterventionList();
                 aClientList = GetClientListByDistrict(GetUserDistrict().DistrictID);
 
                 foreach (var intervention in interventions)
@@ -156,9 +156,7 @@ namespace ENETCareMVCApp.Controllers
             InterventionType anInterventionType;
             using (var db = new DBContext())
             {
-                anInterventionType = (from i in db.InterventionTypes
-                                      where i.InterventionTypeID == interventionTypeID
-                                      select i).First();
+                anInterventionType = repository.GetInterventionTypeByInterventionTypeID(interventionTypeID);
             }
             return anInterventionType;
         }
@@ -166,14 +164,15 @@ namespace ENETCareMVCApp.Controllers
         [NonAction]
         public User GetUserDetailsByUserID(int userID)
         {
-            User anUser;
-            using (var db = new DBContext())
-            {
-                anUser = (from u in db.Users
-                          where u.UserID == userID
-                          select u).First();
-            }
-            return anUser;
+            //User anUser;
+            //using (var db = new DBContext())
+            //{
+            //    anUser = (from u in db.Users
+            //              where u.UserID == userID
+            //              select u).First();
+            //}
+            //return anUser;
+            return repository.GetUserDetails(userID);
         }
 
         protected override void Dispose(bool disposing)
