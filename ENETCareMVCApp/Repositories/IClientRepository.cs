@@ -10,5 +10,6 @@ namespace ENETCareMVCApp.Repositories
     {
         Client AddClients(Client aClient);
         bool IsUserNameExits(string clientName);
+        List<Client> GetClientListByDistrict(int districtID);
     }
 }
