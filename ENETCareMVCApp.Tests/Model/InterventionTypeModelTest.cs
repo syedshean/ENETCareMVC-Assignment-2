@@ -32,6 +32,7 @@ namespace ENETCareMVCApp.Tests.Model
                 InterventionTypeName = "Mosquito Net",
                 EstimatedCost = 2000,
                 EstimatedLabour = 24,
+            
 
             };
 
