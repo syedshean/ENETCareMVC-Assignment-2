@@ -39,7 +39,9 @@ namespace ENETCareMVCApp.Controllers
             return View("Index", interventions.ToList());
         }
 
-        [Authorize(Roles = "Manager")]
+        
+        ///Manager checks Proposed Intervention List
+        [Authorize(Roles = "Manager")]     
         public ActionResult ProposedInterventionList()
         {
             string logedUser = User.Identity.Name;
@@ -48,7 +50,9 @@ namespace ENETCareMVCApp.Controllers
             return View("ProposedInterventionList", interventions.ToList());
         }
 
-        [Authorize(Roles = "Manager")]
+        
+        //Manager checks Approved Intervention List
+        [Authorize(Roles = "Manager")]      
         public ActionResult ManagerApprovedInterventionList()
         {
             string logedUser = User.Identity.Name;
@@ -58,6 +62,8 @@ namespace ENETCareMVCApp.Controllers
             return View("ManagerApprovedInterventionList", interventions.ToList());
         }
 
+        
+        ///Engineer checks previous Intervention List
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult PreviousInterventionList()
         {
@@ -69,7 +75,8 @@ namespace ENETCareMVCApp.Controllers
             return View("PreviousInterventionList", interventions.ToList());
         }
 
-        // GET: Interventions/Create
+
+        //Engineer GET: Interventions/Create
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult Create()
         {
@@ -123,6 +130,8 @@ namespace ENETCareMVCApp.Controllers
             return View(intervention);
         }
 
+
+        // Change the state of an intervention 
         [Authorize(Roles = "SiteEngineer, Manager")]
         public ActionResult ChangeInterventionState(int? id)
         {
@@ -135,7 +144,8 @@ namespace ENETCareMVCApp.Controllers
             {
                 return HttpNotFound();
             } 
-            
+
+            // If the login user is a site engineer, apply relevant conditions 
             string logedUser = User.Identity.Name;
             string userType = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserType;
             var changeInterventionState = InterventionState.Cancelled;
@@ -165,6 +175,7 @@ namespace ENETCareMVCApp.Controllers
                        });
             ViewBag.SiteEngineerInterventionStateList = SiteEngineerSelectList;
 
+            // If the login user is a manager, remove restrains  
             if (userType == "Manager")
             {
                 ViewBag.ManagerApproveState = true;                
@@ -203,9 +214,9 @@ namespace ENETCareMVCApp.Controllers
                 string interventionTypeName = db.InterventionTypes.Where(it => it.InterventionTypeID == intervention.InterventionTypeID).FirstOrDefault().InterventionTypeName;
                 db.Entry(intervention).State = EntityState.Modified;
                 db.SaveChanges();
-                if(userType == "Manager")
+                if(userType == "Manager")   // If manager changed the intervention state, send email reminder to the responsible site engineer.
                 {
-                    SendEmailToSiteEngineer(intervention,clientName,interventionTypeName);
+                    SendEmailToSiteEngineer(intervention,clientName,interventionTypeName); 
                     return RedirectToAction("ProposedInterventionList");
                 }
                 else
@@ -219,6 +230,7 @@ namespace ENETCareMVCApp.Controllers
             return View(intervention);
         }
     
+        // Engineer edits Quality Management Information 
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult EditQMI(int? id)
         {
@@ -269,13 +281,14 @@ namespace ENETCareMVCApp.Controllers
             return View(anIntervention);
         }
 
+
+        // Accountant checks total cost by engineer report
         [Authorize(Roles = "Accountant")]
         public ActionResult TotalCostByEngineerReport()
         {
             List<SiteEngineerTotalCost> resultList = new List<SiteEngineerTotalCost>();
             List<User> anUserList = db.Users.Where(u => u.UserType == "SiteEngineer").OrderBy(u => u.UserName).ToList();
-            foreach (var user in anUserList)
-            {
+            foreach (var user in anUserList)             {
                 SiteEngineerTotalCost result = db.Interventions
                            .Where(i => (i.InterventionState == InterventionState.Completed) && (i.UserID == user.UserID))
                            .GroupBy(i => i.UserID)
@@ -299,6 +312,8 @@ namespace ENETCareMVCApp.Controllers
             return View(resultList);
         }
 
+
+        //  Accountant checks average cost by engineer report  
         [Authorize(Roles = "Accountant")]
         public ActionResult AverageCostByEngineerReport()
         {
@@ -329,6 +344,7 @@ namespace ENETCareMVCApp.Controllers
             return View(resultList);
         }
 
+        //  Accountant checks cost by district report
         [Authorize(Roles = "Accountant")]
         public ActionResult CostByDistrictReport()
         {
@@ -359,6 +375,8 @@ namespace ENETCareMVCApp.Controllers
             return View(resultList);
         }
 
+
+        //  Accountant checks the district list of monthly cost 
         [Authorize(Roles = "Accountant")]
         public ActionResult DistrictListForMonthlyCost()
         {
@@ -366,6 +384,8 @@ namespace ENETCareMVCApp.Controllers
             return View(db.Districts.ToList());
         }
 
+
+        //  Accountant checks the monthly cost for disctrict 
         [Authorize(Roles = "Accountant")]
         public ActionResult MonthlyCostsForDistrict(int? id)
         {
@@ -398,6 +418,7 @@ namespace ENETCareMVCApp.Controllers
             return View(resultList);
         }
 
+        //  Get UserID by searching with UserName
         [NonAction]
         public string GetUserIDByUserName(string userName)
         {
@@ -407,11 +428,10 @@ namespace ENETCareMVCApp.Controllers
                 userID = (from u in db.Users
                           where u.LoginName == userName
                           select u.UserID).FirstOrDefault().ToString();
-
             }
             return userID;
         }
-
+        //  Get DistrictID by searching with Username
         [NonAction]
         public string GetDistrictIDByUserName(string userName)
         {
@@ -426,6 +446,7 @@ namespace ENETCareMVCApp.Controllers
             return districtID;
         }
 
+        //  Send email reminder to a site engineer
         [NonAction]
         public void SendEmailToSiteEngineer(Intervention intervention, string clientName, string interventionTypeName)
         {
@@ -453,6 +474,8 @@ namespace ENETCareMVCApp.Controllers
             }
         }
 
+
+        //  Dispose database connection
         protected override void Dispose(bool disposing)
         {
             if (disposing)
