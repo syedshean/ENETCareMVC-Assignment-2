@@ -8,7 +8,7 @@ namespace ENETCareMVCApp.Tests.Model
     public class InterventionModelTest
     {
         [TestMethod]
-        public void Validate_Intervention_Model_Given_LabourHourRequired_Is_NegativeValue_ExpectOneValidationError()
+        public void Given_LabourHourRequired_Is_NegativeValue_ExpectOneValidationError()
         {
             var model = new Intervention()
             {
@@ -24,7 +24,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_Intervention_Model_Given_LabourHourRequired_Is_Unreasonable_ExpectOneValidationError()
+        public void Given_LabourHourRequired_Is_Unreasonable_ExpectOneValidationError()
         {
             var model = new Intervention()
             {
@@ -40,7 +40,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_Intervention_Model_Given_CostRequired_Is_NegativeValue_ExpectOneValidationError()
+        public void Given_CostRequired_Is_NegativeValue_ExpectOneValidationError()
         {
             var model = new Intervention()
             {
@@ -56,7 +56,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_Intervention_Model_Given_CostRequired_Is_Unreasonable_ExpectOneValidationError()
+        public void Given_CostRequired_Is_Unreasonable_ExpectOneValidationError()
         {
             var model = new Intervention()
             {
@@ -86,7 +86,7 @@ namespace ENETCareMVCApp.Tests.Model
         //}
 
         [TestMethod]
-        public void Validate_Intervention_Model_Given_InterventionDate_Is_Null_ExpectOneValidationError()
+        public void Given_InterventionDate_Is_Null_ExpectOneValidationError()
         {
             var model = new Intervention()
             {
@@ -104,7 +104,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_Intervention_Model_Given_InterventionDate_Is_Valid_ExpectNoValidationError()
+        public void Given_InterventionDate_Is_Valid_ExpectNoValidationError()
         {
             var model = new Intervention()
             {
@@ -120,7 +120,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_Intervention_Model_Given_Note_Is_Null_ExpectNoValidationError()
+        public void Given_Note_Is_Null_ExpectNoValidationError()
         {
             var model = new Intervention()
             {
@@ -137,7 +137,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_Intervention_Model_Given_RemainingLife_Is_Null_ExpectNoValidationError()
+        public void Given_RemainingLife_Is_Null_ExpectNoValidationError()
         {
             var model = new Intervention()
             {
@@ -155,7 +155,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_Intervention_Model_Given_LastEditDate_Is_Null_ExpectNoValidationError()
+        public void Given_LastEditDate_Is_Null_ExpectNoValidationError()
         {
             var model = new Intervention()
             {
