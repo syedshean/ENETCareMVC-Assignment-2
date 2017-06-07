@@ -122,33 +122,33 @@ namespace ENETCareMVCApp.Controllers
             return repository.GetClientListByDistrict(districtID);
         }
 
-        [NonAction]
-        public List<Client> GetClientList()
-        {
-            List<Client> aClientList = new List<Client>();
-            using (var db = new DBContext())
-            {
-                aClientList = (from c in db.Clients
-                               select c).ToList();
+        //[NonAction]
+        //public List<Client> GetClientList()
+        //{
+        //    List<Client> aClientList = new List<Client>();
+        //    using (var db = new DBContext())
+        //    {
+        //        aClientList = (from c in db.Clients
+        //                       select c).ToList();
 
-            }
-            return aClientList;
-        }
+        //    }
+        //    return aClientList;
+        //}
 
-        [NonAction]
-        public string GetClientNameByClientID(int clientID)
-        {
+        //[NonAction]
+        //public string GetClientNameByClientID(int clientID)
+        //{
 
-            string clientName;
-            using (var db = new DBContext())
-            {
-                clientName = (from c in db.Clients
-                              where c.ClientID == clientID
-                              select c.ClientName).ToString();
+        //    string clientName;
+        //    using (var db = new DBContext())
+        //    {
+        //        clientName = (from c in db.Clients
+        //                      where c.ClientID == clientID
+        //                      select c.ClientName).ToString();
 
-            }
-            return clientName;
-        }
+        //    }
+        //    return clientName;
+        //}
 
         [NonAction]
         public InterventionType GetInterventionTypeByInterventionTypeID(int interventionTypeID)
