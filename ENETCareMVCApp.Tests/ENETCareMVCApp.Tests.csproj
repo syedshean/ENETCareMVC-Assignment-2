@@ -91,7 +91,10 @@
     <Compile Include="Controllers\ClientsControllerTest.cs" />
     <Compile Include="Controllers\InterventionsControllerTest.cs" />
     <Compile Include="Model\ClientModelTest.cs" />
+    <Compile Include="Model\DistrictModelTest.cs" />
     <Compile Include="Model\InterventionModelTest.cs" />
+    <Compile Include="Model\InterventionTypeModelTest.cs" />
+    <Compile Include="Model\ReportModelTest.cs" />
     <Compile Include="Model\TestModelHelper.cs" />
     <Compile Include="Model\UserModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

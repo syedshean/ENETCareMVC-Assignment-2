@@ -8,7 +8,7 @@ namespace ENETCareMVCApp.Tests.Model
     public class UserModelTest
     {
         [TestMethod]       
-        public void Validate_User_Model_Given_UserName_Is_Null_ExpectOneValidationError()
+        public void Given_UserName_Is_Null_ExpectOneValidationError()
         {
             var model = new User()
             {
@@ -26,7 +26,7 @@ namespace ENETCareMVCApp.Tests.Model
 
 
         [TestMethod]
-        public void Validate_User_Model_Given_LoginName_Is_Null_ExpectOneValidationError()
+        public void Given_LoginName_Is_Null_ExpectOneValidationError()
         {
             var model = new User()
             {
@@ -43,7 +43,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_User_Model_Given_Email_Is_Null_ExpectOneValidationError()
+        public void Given_Email_Is_Null_ExpectOneValidationError()
         {
             var model = new User()
             {
@@ -60,7 +60,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_User_Model_Given_Email_Is_Not_Valid_ExpectOneValidationError()
+        public void Given_Email_Is_Not_Valid_ExpectOneValidationError()
         {
             var model = new User()
             {
@@ -77,7 +77,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_User_Model_Given_UserType_Is_Null_ExpectOneValidationError()
+        public void Given_UserType_Is_Null_ExpectOneValidationError()
         {
             var model = new User()
             {
@@ -94,7 +94,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_User_Model_Given_MaxHour_Is_null_ExpectNoValidationError()
+        public void Given_MaxHour_Is_null_ExpectNoValidationError()
         {
             var model = new User()
             {
@@ -111,7 +111,7 @@ namespace ENETCareMVCApp.Tests.Model
         }
 
         [TestMethod]
-        public void Validate_User_Model_Given_MaxCost_Is_null_ExpectNoValidationError()
+        public void Given_MaxCost_Is_null_ExpectNoValidationError()
         {
             var model = new User()
             {
