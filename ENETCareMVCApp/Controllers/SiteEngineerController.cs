@@ -15,5 +15,6 @@ namespace ENETCareMVCApp.Controllers
             ViewBag.StatusMessage = message;
             return View("Index");
         }
+
     }
 }
