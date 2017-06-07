@@ -92,8 +92,8 @@
     <Compile Include="Controllers\InterventionsControllerTest.cs" />
     <Compile Include="Model\InterventionModelTest.cs" />
     <Compile Include="Model\TestModelHelper.cs" />
+    <Compile Include="Model\UserModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

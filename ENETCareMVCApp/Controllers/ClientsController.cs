@@ -195,7 +195,7 @@ namespace ENETCareMVCApp.Controllers
         private District GetUserDistrict()
         {
             string logedUser = User.Identity.Name;
-            User currentUser = (db.Users.Where(u => u.LoginName == logedUser)).First();
+            User currentUser = (db.Users.Where(u => u.LoginName == logedUser)).FirstOrDefault();
             if (currentUser == null)
             {
                 RedirectToAction("Index", "Home");
