@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ClientsControllerTest.cs" />
     <Compile Include="Controllers\InterventionsControllerTest.cs" />
+    <Compile Include="Model\ClientModelTest.cs" />
     <Compile Include="Model\InterventionModelTest.cs" />
     <Compile Include="Model\TestModelHelper.cs" />
     <Compile Include="Model\UserModelTest.cs" />
