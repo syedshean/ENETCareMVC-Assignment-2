@@ -31,7 +31,7 @@ namespace ENETCareMVCApp.Controllers
 
         // GET: Interventions
         [Authorize(Roles = "SiteEngineer")]
-        public ActionResult Index()//Needs to edit check asngmt document Bus rules
+        public ActionResult Index()
         {
             string logedUser = User.Identity.Name;
             int userID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
@@ -59,7 +59,7 @@ namespace ENETCareMVCApp.Controllers
         }
 
         [Authorize(Roles = "SiteEngineer")]
-        public ActionResult PreviousInterventionList()//Needs to edit check asngmt document Bus rules
+        public ActionResult PreviousInterventionList()
         {
             string logedUser = User.Identity.Name;
             int userID = db.Users.Where(i=>i.LoginName==logedUser).FirstOrDefault().UserID;
