@@ -69,21 +69,6 @@ namespace ENETCareMVCApp.Controllers
             return View("PreviousInterventionList", interventions.ToList());
         }
 
-        // GET: Interventions/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Intervention intervention = db.Interventions.Find(id);
-        //    if (intervention == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(intervention);
-        //}
-
         // GET: Interventions/Create
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult Create()
@@ -102,9 +87,6 @@ namespace ENETCareMVCApp.Controllers
             return View("Create", aInterventionModel);
         }
 
-        // POST: Interventions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,UserID,InterventionTypeID")] Intervention intervention)
@@ -140,41 +122,6 @@ namespace ENETCareMVCApp.Controllers
             ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
             return View(intervention);
         }
-
-        // GET: Interventions/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Intervention intervention = db.Interventions.Find(id);
-        //    if (intervention == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
-        //    ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
-        //    return View(intervention);
-        //}
-
-        //// POST: Interventions/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,UserID,InterventionTypeID")] Intervention intervention)
-        //{
-        //    if (ModelState.IsValid)
-        //    {                
-        //        db.Entry(intervention).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("PreviousInterventionList");
-        //    }
-        //    ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
-        //    ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
-        //    return View(intervention);
-        //}
 
         [Authorize(Roles = "SiteEngineer, Manager")]
         public ActionResult ChangeInterventionState(int? id)
@@ -243,9 +190,6 @@ namespace ENETCareMVCApp.Controllers
             return View("ChangeInterventionState", intervention);
         }
 
-        // POST: Interventions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ChangeInterventionState([Bind(Include = "InterventionID,LabourRequired,CostRequired,InterventionDate,InterventionState,ClientID,UserID,ApproveUserID,InterventionTypeID")] Intervention intervention)
@@ -255,83 +199,26 @@ namespace ENETCareMVCApp.Controllers
 
             if (ModelState.IsValid)
             {
+                string clientName = db.Clients.Where(c => c.ClientID == intervention.ClientID).FirstOrDefault().ClientName;
+                string interventionTypeName = db.InterventionTypes.Where(it => it.InterventionTypeID == intervention.InterventionTypeID).FirstOrDefault().InterventionTypeName;
                 db.Entry(intervention).State = EntityState.Modified;
                 db.SaveChanges();
-
-                // Email sent 
-                if (userType == "Manager")
+                if(userType == "Manager")
                 {
-                    string emailAddr = db.Users.Where(i => i.UserID == intervention.UserID).FirstOrDefault().Email;
-
-                    try
-                    {
-                        
-                        MailMessage mailMessage = new MailMessage();
-
-                        mailMessage.To.Add(emailAddr);
-                        mailMessage.From = new MailAddress("ENETCare.UltimoCoder@gmail.com");
-                        mailMessage.Subject = "Intervention state updated";
-                        mailMessage.Body = "Hello your Intervention state was just updated. The status of your intervention is now "+ intervention.InterventionState.ToString(); //\"" + intervention.InterventionType.InterventionTypeName +"\" for client "+ intervention.Client.ClientName +"
-
-                        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
-                        smtpClient.EnableSsl = true;
-                        NetworkCredential NetworkCred = new NetworkCredential("ENETCare.UltimoCoder@gmail.com", "Aa!12345678");
-                        smtpClient.UseDefaultCredentials = false;
-                        smtpClient.Credentials = NetworkCred;
-                        smtpClient.Port = 587;
-                        smtpClient.Send(mailMessage);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        throw (ex);
-                    }
-                }
-
-                if (userType == "Manager")
-                {
+                    SendEmailToSiteEngineer(intervention,clientName,interventionTypeName);
                     return RedirectToAction("ProposedInterventionList");
                 }
                 else
                 {
                     return RedirectToAction("PreviousInterventionList");
                 }
-                
             }
-            //string logedUser = User.Identity.Name;
-            //int userID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
             intervention.ApproveUserID = db.Users.Where(i => i.LoginName == logedUser).FirstOrDefault().UserID;
             ViewBag.ClientID = new SelectList(db.Clients, "ClientID", "ClientName", intervention.ClientID);
             ViewBag.InterventionTypeID = new SelectList(db.InterventionTypes, "InterventionTypeID", "InterventionTypeName", intervention.InterventionTypeID);
             return View(intervention);
         }
-
-        //// GET: Interventions/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Intervention intervention = db.Interventions.Find(id);
-        //    if (intervention == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(intervention);
-        //}
-
-        //// POST: Interventions/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Intervention intervention = db.Interventions.Find(id);
-        //    db.Interventions.Remove(intervention);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
+    
         [Authorize(Roles = "SiteEngineer")]
         public ActionResult EditQMI(int? id)
         {
@@ -537,6 +424,33 @@ namespace ENETCareMVCApp.Controllers
 
             }
             return districtID;
+        }
+
+        [NonAction]
+        public void SendEmailToSiteEngineer(Intervention intervention, string clientName, string interventionTypeName)
+        {
+            string emailAddr = db.Users.Where(i => i.UserID == intervention.UserID).FirstOrDefault().Email;
+            try
+            {
+                MailMessage mailMessage = new MailMessage();
+
+                mailMessage.To.Add(emailAddr);
+                mailMessage.From = new MailAddress("ENETCare.UltimoCoder@gmail.com");
+                mailMessage.Subject = "Intervention state updated";
+                mailMessage.Body = "Hello your Intervention state was just updated. The status of your intervention \"" + interventionTypeName + "\" created on " + intervention.InterventionDate + " for client " + clientName + " is now " + intervention.InterventionState.ToString(); 
+
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+                smtpClient.EnableSsl = true;
+                NetworkCredential NetworkCred = new NetworkCredential("ENETCare.UltimoCoder@gmail.com", "Aa!12345678");
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = NetworkCred;
+                smtpClient.Port = 587;
+                smtpClient.Send(mailMessage);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
         protected override void Dispose(bool disposing)
