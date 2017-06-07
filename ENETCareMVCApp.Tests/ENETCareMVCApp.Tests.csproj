@@ -89,8 +89,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountantTest.cs" />
+    <Compile Include="Controllers\AccountantControllerTest.cs" />
     <Compile Include="Controllers\ClientsControllerTest.cs" />
     <Compile Include="Controllers\InterventionsControllerTest.cs" />
+    <Compile Include="Controllers\ManagerControllerTest.cs" />
+    <Compile Include="Controllers\SiteEngineerControllerTest.cs" />
     <Compile Include="InterventionStatusNames.cs" />
     <Compile Include="ManagerTests.cs" />
     <Compile Include="Model\ClientModelTest.cs" />

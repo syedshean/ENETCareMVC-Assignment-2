@@ -12,7 +12,7 @@ namespace ENETCareMVCApp.Controllers
         public ActionResult Index(String message)
         {
             ViewBag.StatusMessage = message;
-            return View();
+            return View("Index");
         }
     }
 }
