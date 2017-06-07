@@ -28,41 +28,5 @@ namespace ENETCareMVCApp.Repositories
                 return false;
             else return true;
         }
-
-        public List<Client> GetClientListByDistrict(int districtID)
-        {
-            List<Client> aClientList = new List<Client>();
-            using (var db = new DBContext())
-            {
-                aClientList = (from c in db.Clients
-                               where c.District.DistrictID == districtID
-                               select c).ToList();
-
-            }
-            return aClientList;
-        }
-        public InterventionType GetInterventionTypeByInterventionTypeID(int interventionTypeID)
-        {
-            return (from i in db.InterventionTypes
-                    where i.InterventionTypeID == interventionTypeID
-                    select i).FirstOrDefault();
-        }
-
-        public List<Intervention> GetInterventionList()
-        {
-            return db.Interventions.Where(i => i.InterventionState != InterventionState.Cancelled).ToList();
-        }
-
-        public User GetUserDetails(int userID)
-        {
-            User anUser;
-            using (var db = new DBContext())
-            {
-                anUser = (from u in db.Users
-                          where u.UserID == userID
-                          select u).First();
-            }
-            return anUser;
-        }
     }
 }

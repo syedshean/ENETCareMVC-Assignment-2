@@ -80,7 +80,7 @@ namespace ENETCareMVCApp.Controllers
             List<ClientWithInterventionModel> aClientWithInterventionList = new List<ClientWithInterventionModel>();
             using (var db = new DBContext())
             {
-                interventions = repository.GetInterventionList();
+                interventions = db.Interventions.Where(i => i.InterventionState != InterventionState.Cancelled).ToList();
                 aClientList = GetClientListByDistrict(GetUserDistrict().DistrictID);
 
                 foreach (var intervention in interventions)
@@ -119,36 +119,16 @@ namespace ENETCareMVCApp.Controllers
         [NonAction]
         public List<Client> GetClientListByDistrict(int districtID)
         {
-            return repository.GetClientListByDistrict(districtID);
+            List<Client> aClientList = new List<Client>();
+            using (var db = new DBContext())
+            {
+                aClientList = (from c in db.Clients
+                               where c.District.DistrictID == districtID
+                               select c).ToList();
+
+            }
+            return aClientList;
         }
-
-        //[NonAction]
-        //public List<Client> GetClientList()
-        //{
-        //    List<Client> aClientList = new List<Client>();
-        //    using (var db = new DBContext())
-        //    {
-        //        aClientList = (from c in db.Clients
-        //                       select c).ToList();
-
-        //    }
-        //    return aClientList;
-        //}
-
-        //[NonAction]
-        //public string GetClientNameByClientID(int clientID)
-        //{
-
-        //    string clientName;
-        //    using (var db = new DBContext())
-        //    {
-        //        clientName = (from c in db.Clients
-        //                      where c.ClientID == clientID
-        //                      select c.ClientName).ToString();
-
-        //    }
-        //    return clientName;
-        //}
 
         [NonAction]
         public InterventionType GetInterventionTypeByInterventionTypeID(int interventionTypeID)
@@ -156,7 +136,9 @@ namespace ENETCareMVCApp.Controllers
             InterventionType anInterventionType;
             using (var db = new DBContext())
             {
-                anInterventionType = repository.GetInterventionTypeByInterventionTypeID(interventionTypeID);
+                anInterventionType = (from i in db.InterventionTypes
+                                      where i.InterventionTypeID == interventionTypeID
+                                      select i).FirstOrDefault();
             }
             return anInterventionType;
         }
@@ -164,15 +146,14 @@ namespace ENETCareMVCApp.Controllers
         [NonAction]
         public User GetUserDetailsByUserID(int userID)
         {
-            //User anUser;
-            //using (var db = new DBContext())
-            //{
-            //    anUser = (from u in db.Users
-            //              where u.UserID == userID
-            //              select u).First();
-            //}
-            //return anUser;
-            return repository.GetUserDetails(userID);
+            User anUser;
+            using (var db = new DBContext())
+            {
+                anUser = (from u in db.Users
+                          where u.UserID == userID
+                          select u).First();
+            }
+            return anUser;
         }
 
         protected override void Dispose(bool disposing)
