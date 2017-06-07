@@ -23,14 +23,7 @@ namespace ENETCareMVCApp.Tests.Controllers
             CostRequired = 2000,
             UserID = 1
 
-        };
-        [TestMethod]
-        public void TestPreviousInterventionListView()
-        {
-            var controller = new InterventionsController();
-            var result = controller.PreviousInterventionList() as ViewResult;
-            Assert.AreEqual("PreviousInterventionList", result.ViewName);
-        }
+        };        
 
         [TestMethod]
         public void EditQMI_PostOk()
