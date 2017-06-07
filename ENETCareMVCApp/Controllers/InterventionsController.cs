@@ -9,13 +9,25 @@ using System.Web.Mvc;
 using ENETCareMVCApp.Models;
 using System.Globalization;
 using System.Net.Mail;
+using ENETCareMVCApp.Repositories;
 
 namespace ENETCareMVCApp.Controllers
 {
     public class InterventionsController : Controller
     {
         private DBContext db = new DBContext();
+        IInterventionRepository repository;
 
+        public InterventionsController()
+        {
+            db = new DBContext();
+            repository = new InterventionRepository();
+        }
+
+        public InterventionsController(IInterventionRepository repository)
+        {
+            this.repository = repository;
+        }
 
         // GET: Interventions
         [Authorize(Roles = "SiteEngineer")]
@@ -353,14 +365,8 @@ namespace ENETCareMVCApp.Controllers
             if (ModelState.IsValid)
             {
                 intervention.LastEditDate = DateTime.Now.ToString("yyyy-MM-dd");
-                db.Interventions.Attach(intervention);
-                //db.Entry(intervention).Property(i => i.InterventionState).IsModified = true;
-                db.Entry(intervention).Property(i => i.Notes).IsModified = true;
-                db.Entry(intervention).Property(i => i.RemainingLife).IsModified = true;
-                db.Entry(intervention).Property(i => i.LastEditDate).IsModified = true;
-                //db.Entry(intervention).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ClientListWithIntervention","Clients");
+                Intervention returnIntervention = repository.EditIntervention(intervention);
+                return RedirectToAction("ClientListWithIntervention","Clients", new { id = returnIntervention.InterventionID});
             }
             Intervention anIntervention = db.Interventions.Find(intervention.InterventionID);
             if ((intervention.InterventionState == InterventionState.Proposed) || (intervention.InterventionState == InterventionState.Approved))
