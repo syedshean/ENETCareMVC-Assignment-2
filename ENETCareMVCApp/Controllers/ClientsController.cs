@@ -107,7 +107,7 @@ namespace ENETCareMVCApp.Controllers
         private District GetUserDistrict()
         {
             string logedUser = User.Identity.Name;
-            User currentUser = (db.Users.Where(u => u.LoginName == logedUser)).First();
+            User currentUser = (db.Users.Where(u => u.LoginName == logedUser)).FirstOrDefault();
             if (currentUser == null)
             {
                 RedirectToAction("Index", "Home");
@@ -119,14 +119,6 @@ namespace ENETCareMVCApp.Controllers
         [NonAction]
         public List<Client> GetClientListByDistrict(int districtID)
         {
-            //List<Client> aClientList = new List<Client>();
-            //using (var db = new DBContext())
-            //{
-            //    aClientList = (from c in db.Clients
-            //                   where c.District.DistrictID == districtID
-            //                   select c).ToList();
-
-            //}
             return repository.GetClientListByDistrict(districtID);
         }
 
