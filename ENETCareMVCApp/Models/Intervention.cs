@@ -32,6 +32,7 @@ namespace ENETCareMVCApp.Models
         
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Intervention Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public string InterventionDate {get; set;}
         
@@ -42,6 +43,8 @@ namespace ENETCareMVCApp.Models
 
         public int? RemainingLife {get; set;}
 
+
+        [Display(Name = "Last Edit Date")]
         public string LastEditDate {get; set;}
 
         [Required]
@@ -53,7 +56,7 @@ namespace ENETCareMVCApp.Models
         public virtual Client Client { get; set; }
 
         [Required]
-        [Display(Name = "SiteEngineer")]
+        [Display(Name = "Site Engineer")]
         public int UserID { get; set; }
 
 

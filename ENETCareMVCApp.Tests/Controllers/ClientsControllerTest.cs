@@ -31,30 +31,5 @@ namespace ENETCareMVCApp.Tests.Controllers
             Assert.AreEqual(100, result.RouteValues["id"]);
             Assert.AreEqual("Index", result.RouteValues["action"]);
         }
-
-        //[TestMethod]
-        //public void ClientListWithIntervention_ListOK()
-        //{
-        //    Mock<IClientRepository> service = new Mock<IClientRepository>();
-        //    service.Setup(x => x.GetInterventionList()).Returns<List<Intervention>>(e => { Intervention anIntervention = new Intervention();
-        //        anIntervention.InterventionState = InterventionState.Approved;
-        //        e.Add(anIntervention);
-        //                                                                                    return e; });
-        //    var controller = new ClientsController(service.Object);
-        //    List<Intervention> interventionList = controller.GetInterventionList();
-        //    Assert.AreEqual(InterventionState.Approved, interventionList[0].InterventionState);
-        //    //Assert.AreEqual("ClientListWithIntervention", result.RouteValues["action"]);
-        //}
-
-        //[TestMethod]
-        //public void Get_Correct_ClientList_By_District()
-        //{
-        //    Mock<IClientRepository> service = new Mock<IClientRepository>();
-        //    service.Setup(x => x.GetClientListByDistrict(It.IsAny<int>())).Returns<List<Client>>(e => { e[0].DistrictID = 1; return e; });
-        //    var controller = new ClientsController(service.Object);
-
-        //    List<Client> result = controller.GetClientListByDistrict(1);
-        //    Assert.AreEqual(1, result[0].DistrictID);
-        //}
     }
 }

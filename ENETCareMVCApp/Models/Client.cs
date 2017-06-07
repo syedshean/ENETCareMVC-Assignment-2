@@ -13,9 +13,11 @@ namespace ENETCareMVCApp.Models
         public int ClientID { set; get; }
 
         [Required]
+        [Display(Name = "Client Name")]
         public string ClientName { set; get; }
 
         [Required]
+        [Display(Name = "Address")]
         public string Address { set; get; }
 
 
