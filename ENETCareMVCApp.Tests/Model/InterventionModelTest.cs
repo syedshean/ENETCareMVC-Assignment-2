@@ -100,7 +100,7 @@ namespace ENETCareMVCApp.Tests.Model
 
             Assert.AreEqual(1, ErrorMeassageList.Count);
             Assert.IsTrue(ErrorMeassageList[0].ErrorMessage != null);
-            Assert.AreEqual("The InterventionDate field is required.", ErrorMeassageList[0].ErrorMessage);
+            Assert.AreEqual("The Intervention Date field is required.", ErrorMeassageList[0].ErrorMessage);
         }
 
         [TestMethod]

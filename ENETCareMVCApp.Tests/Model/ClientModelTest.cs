@@ -20,7 +20,7 @@ namespace ENETCareMVCApp.Tests.Model
             var ErrorMeassageList = TestModelHelper.Validate(model);
 
             Assert.AreEqual(1, ErrorMeassageList.Count);
-            Assert.AreEqual("The ClientName field is required.", ErrorMeassageList[0].ErrorMessage);
+            Assert.AreEqual("The Client Name field is required.", ErrorMeassageList[0].ErrorMessage);
         }
 
         [TestMethod]
