@@ -21,7 +21,7 @@ namespace ENETCareMVCApp.Tests.Model
             var ErrorMeassageList = TestModelHelper.Validate(model);
 
             Assert.AreEqual(1, ErrorMeassageList.Count);
-            Assert.AreEqual("The InterventionTypeName field is required.", ErrorMeassageList[0].ErrorMessage);
+            Assert.AreEqual("The Intervention Type Name field is required.", ErrorMeassageList[0].ErrorMessage);
         }
 
         [TestMethod]

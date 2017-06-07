@@ -11,6 +11,8 @@ namespace ENETCareMVCApp.Models
         [Required, Key]
         public int InterventionTypeID {get; set;}
 
+
+        [Display(Name = "Intervention Type Name")]
         [Required]
         public string InterventionTypeName {get; set;}
 

@@ -35,7 +35,9 @@ namespace ENETCareMVCApp.Models
         [Display(Name = "Intervention Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public string InterventionDate {get; set;}
-        
+
+
+        [Display(Name = "Intervention State")]
         public InterventionState InterventionState { set; get; }
 
         [DataType(DataType.MultilineText)]
